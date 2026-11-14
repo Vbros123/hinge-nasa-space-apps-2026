@@ -1,0 +1,122 @@
+import type { FarmDashboardData, HistoricalScenario } from '../types/domain'
+
+export const demoDashboard: FarmDashboardData = {
+  farm: {
+    id: 'demo-farm-east',
+    name: 'Prairie View Demonstration Farm',
+    region: 'Eastern Colorado · High Plains',
+    latitude: 39.74,
+    longitude: -103.12,
+    areaHectares: 486,
+    elevationMeters: 1512,
+  },
+  climate: [
+    { id: 'cl-01', farmId: 'demo-farm-east', date: '2025-04-01', precipitationMm: 18, temperatureC: 11.2, soilMoisturePercent: 21, source: 'Synthetic scenario series', status: 'assumed' },
+    { id: 'cl-02', farmId: 'demo-farm-east', date: '2025-05-01', precipitationMm: 42, temperatureC: 15.8, soilMoisturePercent: 26, source: 'Synthetic scenario series', status: 'assumed' },
+    { id: 'cl-03', farmId: 'demo-farm-east', date: '2025-06-01', precipitationMm: 31, temperatureC: 20.4, soilMoisturePercent: 19, source: 'Synthetic scenario series', status: 'assumed' },
+    { id: 'cl-04', farmId: 'demo-farm-east', date: '2025-07-01', precipitationMm: 24, temperatureC: 24.7, soilMoisturePercent: 15, source: 'Synthetic scenario series', status: 'assumed' },
+    { id: 'cl-05', farmId: 'demo-farm-east', date: '2025-08-01', precipitationMm: 37, temperatureC: 22.9, soilMoisturePercent: 18, source: 'Synthetic scenario series', status: 'assumed' },
+    { id: 'cl-06', farmId: 'demo-farm-east', date: '2025-09-01', precipitationMm: 29, temperatureC: 17.1, soilMoisturePercent: 22, source: 'Synthetic scenario series', status: 'assumed' },
+  ],
+  soil: {
+    farmId: 'demo-farm-east',
+    texture: 'Silt loam (illustrative)',
+    organicCarbonPercent: 1.8,
+    availableWaterCapacityMmPerM: 148,
+    ph: 6.7,
+    status: 'assumed',
+  },
+  vegetation: [
+    { farmId: 'demo-farm-east', date: '2025-04-15', ndvi: 0.34, source: 'Synthetic vegetation profile', status: 'assumed' },
+    { farmId: 'demo-farm-east', date: '2025-05-15', ndvi: 0.52, source: 'Synthetic vegetation profile', status: 'assumed' },
+    { farmId: 'demo-farm-east', date: '2025-06-15', ndvi: 0.71, source: 'Synthetic vegetation profile', status: 'assumed' },
+    { farmId: 'demo-farm-east', date: '2025-07-15', ndvi: 0.66, source: 'Synthetic vegetation profile', status: 'assumed' },
+    { farmId: 'demo-farm-east', date: '2025-08-15', ndvi: 0.49, source: 'Synthetic vegetation profile', status: 'assumed' },
+    { farmId: 'demo-farm-east', date: '2025-09-15', ndvi: 0.38, source: 'Synthetic vegetation profile', status: 'assumed' },
+  ],
+  rotations: [
+    {
+      id: 'wheat-fallow',
+      name: 'Wheat · Fallow',
+      sequence: ['Winter wheat', 'Fallow'],
+      annualWaterNeedMm: 248,
+      soilImpact: 49,
+      climateResilience: 57,
+      feasibility: 92,
+      environmentalScore: 48,
+      confidence: 0.64,
+      color: '#b28a58',
+      description: 'A familiar low-complexity baseline with a long recovery window.',
+    },
+    {
+      id: 'wheat-cover',
+      name: 'Wheat · Cover',
+      sequence: ['Winter wheat', 'Cover crop'],
+      annualWaterNeedMm: 326,
+      soilImpact: 82,
+      climateResilience: 77,
+      feasibility: 73,
+      environmentalScore: 86,
+      confidence: 0.68,
+      color: '#5aa889',
+      description: 'Adds living cover to support soil structure, with higher water demand.',
+    },
+    {
+      id: 'sorghum-legume',
+      name: 'Sorghum · Legume',
+      sequence: ['Sorghum', 'Pulse crop'],
+      annualWaterNeedMm: 225,
+      soilImpact: 75,
+      climateResilience: 84,
+      feasibility: 67,
+      environmentalScore: 78,
+      confidence: 0.38,
+      color: '#7095bd',
+      description: 'A diversified warm-season sequence with lower illustrative water demand.',
+    },
+  ],
+  evidence: [
+    { id: 'climate', label: 'Climate context', status: 'assumed', source: 'Synthetic monthly scenario', detail: 'Illustrative precipitation and temperature series; not an observation product.', updatedAt: '2025 season' },
+    { id: 'soil', label: 'Soil characteristics', status: 'assumed', source: 'Synthetic farm profile', detail: 'Texture, organic carbon, and water capacity are demonstration inputs.', updatedAt: 'Demo profile' },
+    { id: 'vegetation', label: 'Vegetation signal', status: 'assumed', source: 'Synthetic NDVI profile', detail: 'Seasonal curve is illustrative; no satellite pixels are queried.', updatedAt: '2025 season' },
+    { id: 'rotation-model', label: 'Rotation comparison', status: 'modeled', source: 'Client-side demonstration formula', detail: 'Relative scores respond to current sliders; they are not yield forecasts.' },
+    { id: 'nasa', label: 'NASA product connection', status: 'unavailable', source: 'Not connected', detail: 'No NASA observation API or validated dataset is wired into this demo.' },
+    { id: 'field-validation', label: 'Local field validation', status: 'unavailable', source: 'Not provided', detail: 'No field measurements or agronomist-reviewed calibration are available.' },
+  ],
+}
+
+export const demoFarmLocations = [
+  demoDashboard.farm,
+  {
+    id: 'demo-farm-north',
+    name: 'North Bench Demonstration Farm',
+    region: 'Northeast Colorado · High Plains',
+    latitude: 40.62,
+    longitude: -102.82,
+    areaHectares: 328,
+    elevationMeters: 1334,
+  },
+  {
+    id: 'demo-farm-south',
+    name: 'South Fork Demonstration Farm',
+    region: 'Southeast Colorado · High Plains',
+    latitude: 38.74,
+    longitude: -102.16,
+    areaHectares: 612,
+    elevationMeters: 1197,
+  },
+]
+
+export const historicalScenarios: HistoricalScenario[] = [
+  { year: 2018, precipitationMm: 284, temperatureC: 13.8, dryDays: 34, modeledYieldIndex: 76, note: 'Near-baseline illustrative season' },
+  { year: 2019, precipitationMm: 356, temperatureC: 13.1, dryDays: 27, modeledYieldIndex: 84, note: 'Cooler, wetter scenario' },
+  { year: 2020, precipitationMm: 219, temperatureC: 14.6, dryDays: 46, modeledYieldIndex: 61, note: 'Dry spring scenario' },
+  { year: 2021, precipitationMm: 242, temperatureC: 14.9, dryDays: 42, modeledYieldIndex: 66, note: 'Warm, below-baseline scenario' },
+  { year: 2022, precipitationMm: 305, temperatureC: 14.2, dryDays: 31, modeledYieldIndex: 79, note: 'Variable rainfall scenario' },
+  { year: 2023, precipitationMm: 332, temperatureC: 14.4, dryDays: 29, modeledYieldIndex: 82, note: 'Moderately wet scenario' },
+  { year: 2024, precipitationMm: 267, temperatureC: 15.3, dryDays: 38, modeledYieldIndex: 71, note: 'Warm-season stress scenario' },
+  { year: 2025, precipitationMm: 281, temperatureC: 14.7, dryDays: 36, modeledYieldIndex: 74, note: 'Synthetic current-year scenario' },
+]
+
+export const dataDisclaimer =
+  'Synthetic demonstration data — not authentic NASA observations, field measurements, or validated scientific predictions.'
