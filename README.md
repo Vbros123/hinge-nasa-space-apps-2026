@@ -26,7 +26,7 @@ npm run preview
 
 - **Farm intelligence:** interactive Leaflet location map, selectable synthetic farms, soil profile, seasonal rainfall / vegetation chart, and current model readout.
 - **Rotation comparison:** ranked crop rotations, indicator table, score chart, and trade-off radar.
-- **Decision boundary explorer:** responsive scenario controls, quick presets, a live multi-rotation sensitivity plot with decision transitions, score ranking, and a live explanation of the current lead. The same calculation powers the comparison view.
+- **Decision boundary explorer:** responsive scenario controls, explicit agronomic constraint sliders (heat stress tolerance, soil workability, and risk tolerance), quick presets, a live multi-rotation sensitivity plot with decision transitions, score ranking, and a live explanation of the current lead. The same calculation powers the comparison view.
 - **Historical climate replay:** interactive year timeline, year-to-year comparison, synthetic climate assumptions, and a separately labeled simulated response index.
 - **Evidence & uncertainty:** provenance register with filtering, explicit unavailable data, and supported / sensitive / insufficient decision states.
 - **Integration seams:** shared TypeScript contracts, an API adapter interface, a mock service, and an opt-in HTTP adapter. Proposed routes are not implemented backend endpoints.

@@ -14,6 +14,9 @@ describe('synthetic rotation decision model', () => {
       irrigationCapMm: 0,
       waterPriority: 100,
       soilPriority: 0,
+      heatStressTolerance: 20,
+      soilWorkability: 25,
+      riskTolerance: 15,
     })
 
     expect(baseline.results).toHaveLength(3)
@@ -38,18 +41,40 @@ describe('synthetic rotation decision model', () => {
       for (const irrigationCapMm of [0, 100, 220]) {
         for (const waterPriority of [0, 20, 65, 100]) {
           for (const soilPriority of [0, 50, 100]) {
-            observedStates.add(scoreRotations(demoDashboard.rotations, {
-              precipitationShiftPercent,
-              irrigationCapMm,
-              waterPriority,
-              soilPriority,
-            }).decisionState)
+            for (const heatStressTolerance of [20, 60, 100]) {
+              for (const soilWorkability of [20, 60, 100]) {
+                for (const riskTolerance of [15, 50, 100]) {
+                  observedStates.add(scoreRotations(demoDashboard.rotations, {
+                    precipitationShiftPercent,
+                    irrigationCapMm,
+                    waterPriority,
+                    soilPriority,
+                    heatStressTolerance,
+                    soilWorkability,
+                    riskTolerance,
+                  }).decisionState)
+                }
+              }
+            }
           }
         }
       }
     }
 
     expect(observedStates).toEqual(new Set(['supported', 'sensitive', 'insufficient']))
+  })
+
+  it('adjusts feasibility dynamically when agronomic constraints tighten', () => {
+    const baseline = scoreRotations(demoDashboard.rotations, defaultDecisionInputs)
+    const constrained = scoreRotations(demoDashboard.rotations, {
+      ...defaultDecisionInputs,
+      heatStressTolerance: 20,
+      soilWorkability: 20,
+      riskTolerance: 15,
+    })
+
+    expect(constrained.results[0].dynamicFeasibility).toBeLessThan(baseline.results[0].dynamicFeasibility)
+    expect(constrained.results[0].feasibilityPenalty).toBeGreaterThan(baseline.results[0].feasibilityPenalty)
   })
 
   it('keeps irrigation and preference weights in the same score calculation', () => {

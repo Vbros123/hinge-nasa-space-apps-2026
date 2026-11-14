@@ -63,6 +63,9 @@ export interface DecisionInputs {
   irrigationCapMm: number
   waterPriority: number
   soilPriority: number
+  heatStressTolerance: number
+  soilWorkability: number
+  riskTolerance: number
 }
 
 export interface SimulationOutput {
@@ -71,6 +74,8 @@ export interface SimulationOutput {
   waterFit: number
   modeledSoilWater: number
   agronomicFeasibility: number
+  dynamicFeasibility: number
+  feasibilityPenalty: number
   environmentalScore: number
   confidence: number
   totalScore: number

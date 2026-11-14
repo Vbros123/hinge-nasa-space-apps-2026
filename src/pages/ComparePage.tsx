@@ -32,7 +32,7 @@ export function ComparePage({
   const radarData = [
     { dimension: 'Water fit', ...Object.fromEntries(comparison.results.map((result) => [result.rotationId, result.waterFit])) },
     { dimension: 'Soil water', ...Object.fromEntries(comparison.results.map((result) => [result.rotationId, result.modeledSoilWater])) },
-    { dimension: 'Feasibility', ...Object.fromEntries(comparison.results.map((result) => [result.rotationId, result.agronomicFeasibility])) },
+    { dimension: 'Feasibility', ...Object.fromEntries(comparison.results.map((result) => [result.rotationId, result.dynamicFeasibility])) },
     { dimension: 'Environment', ...Object.fromEntries(comparison.results.map((result) => [result.rotationId, result.environmentalScore])) },
   ]
 
@@ -55,7 +55,7 @@ export function ComparePage({
       </div>
       <div className="compare-grid">
         <Card className="chart-card">
-          <div className="card-heading"><div><Eyebrow>OVERALL RESULT</Eyebrow><h2>Modeled fit score</h2><p>Current weights: water {comparison.inputs.waterPriority}% · soil {comparison.inputs.soilPriority}%</p></div><span className="chart-unit">0–100</span></div>
+          <div className="card-heading"><div><Eyebrow>OVERALL RESULT</Eyebrow><h2>Modeled fit score</h2><p>Current weights: water {comparison.inputs.waterPriority}% · soil {comparison.inputs.soilPriority}% · risk {comparison.inputs.riskTolerance}%</p></div><span className="chart-unit">0–100</span></div>
           <div className="chart-medium">
             <ResponsiveContainer width="100%" height="100%">
               <BarChart data={scoreRows} layout="vertical" margin={{ left: 4, right: 28, top: 8, bottom: 4 }}>
@@ -69,7 +69,7 @@ export function ComparePage({
               </BarChart>
             </ResponsiveContainer>
           </div>
-          <div className="chart-footnote">Score combines modeled water fit and soil-water conditions with fixed feasibility and environmental factors.</div>
+          <div className="chart-footnote">Score combines modeled water fit and soil-water conditions with dynamic feasibility and environmental factors, so agronomic constraints now change the ranking.</div>
         </Card>
         <Card className="radar-card">
           <div className="card-heading"><div><Eyebrow>TRADE-OFF PROFILE</Eyebrow><h2>Where options differ</h2><p>Each axis is a relative 0–100 indicator</p></div></div>
@@ -97,7 +97,7 @@ export function ComparePage({
             <thead><tr><th>Rotation</th><th>Water need</th><th>Water fit</th><th>Soil-water</th><th>Feasibility</th><th>Environment</th><th>Confidence</th></tr></thead>
             <tbody>{comparison.results.map((result) => {
               const rotation = dashboard.rotations.find((item) => item.id === result.rotationId)
-              return <tr key={result.rotationId}><td><span className="table-rotation"><i style={{ background: rotation?.color }} />{rotation?.name}</span></td><td>{rotation?.annualWaterNeedMm} mm / yr</td><td><span className="table-score">{result.waterFit}</span></td><td>{result.modeledSoilWater}</td><td>{result.agronomicFeasibility}</td><td>{result.environmentalScore}</td><td><span className="confidence-cell"><span className="confidence-track"><i style={{ width: `${(result.confidence * 100)}%` }} /></span>{Math.round(result.confidence * 100)}%</span></td></tr>
+              return <tr key={result.rotationId}><td><span className="table-rotation"><i style={{ background: rotation?.color }} />{rotation?.name}</span></td><td>{rotation?.annualWaterNeedMm} mm / yr</td><td><span className="table-score">{result.waterFit}</span></td><td>{result.modeledSoilWater}</td><td>{result.dynamicFeasibility}</td><td>{result.environmentalScore}</td><td><span className="confidence-cell"><span className="confidence-track"><i style={{ width: `${(result.confidence * 100)}%` }} /></span>{Math.round(result.confidence * 100)}%</span></td></tr>
             })}</tbody>
           </table>
         </div>
