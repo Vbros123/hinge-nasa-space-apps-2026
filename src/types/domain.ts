@@ -1,5 +1,6 @@
 export type EvidenceStatus = 'observed' | 'modeled' | 'assumed' | 'unavailable'
-export type DecisionState = 'supported' | 'sensitive' | 'insufficient'
+export type DecisionState = 'supported' | 'sensitive' | 'insufficient' | 'no-feasible'
+export type FeasibilityStatus = 'feasible' | 'constrained' | 'infeasible'
 
 export interface FarmLocation {
   id: string
@@ -56,6 +57,11 @@ export interface CropRotation {
   confidence: number
   color: string
   description: string
+  plantingWindowStartDay: number
+  plantingWindowEndDay: number
+  coverCropTerminationDay: number
+  planningHorizonMonths: number
+  sequenceCompatibility: number
 }
 
 export interface DecisionInputs {
@@ -66,6 +72,21 @@ export interface DecisionInputs {
   heatStressTolerance: number
   soilWorkability: number
   riskTolerance: number
+  plantingWindowStartDay: number
+  plantingWindowEndDay: number
+  coverCropTerminationDay: number
+  rotationPlanningHorizonMonths: number
+  sequenceCompatibility: number
+}
+
+export interface RotationFeasibilityAssessment {
+  rotationId: string
+  status: FeasibilityStatus
+  eligible: boolean
+  applicableConstraints: string[]
+  violatedRestrictions: string[]
+  explanation: string
+  hardConstraintCount: number
 }
 
 export interface SimulationOutput {
@@ -73,6 +94,7 @@ export interface SimulationOutput {
   effectiveWaterMm: number
   waterFit: number
   modeledSoilWater: number
+  climateResilience: number
   agronomicFeasibility: number
   dynamicFeasibility: number
   feasibilityPenalty: number
@@ -80,6 +102,8 @@ export interface SimulationOutput {
   confidence: number
   totalScore: number
   waterDeficitMm: number
+  eligible: boolean
+  feasibilityStatus: FeasibilityStatus
 }
 
 export interface RotationComparison {
@@ -100,6 +124,14 @@ export interface UncertaintyAssessment {
   limitingFactors: string[]
 }
 
+export interface DecisionBoundaryTransition {
+  precipitationShiftPercent: number
+  fromRotationId: string
+  toRotationId: string
+  range: [number, number]
+  reason: 'score' | 'constraint'
+}
+
 export interface DecisionBoundaryPoint {
   precipitationShiftPercent: number
   scores: Record<string, number>
@@ -110,6 +142,7 @@ export interface DecisionBoundary {
   points: DecisionBoundaryPoint[]
   currentInputs: DecisionInputs
   transitions: number[]
+  transitionDetails: DecisionBoundaryTransition[]
 }
 
 export interface EvidenceItem {

@@ -5,8 +5,8 @@ import type { DecisionState, EvidenceItem } from '../types/domain'
 
 const stateDetails: Record<DecisionState, { title: string; detail: string; icon: typeof CheckCircle2 }> = {
   supported: {
-    title: 'Preference supported under assumptions',
-    detail: 'A clear score separation and sufficient confidence support a modeled preference within the declared scenario only.',
+    title: 'Modeled preference',
+    detail: 'A feasible rotation ranks highest under the declared assumptions and remains above the modeled sensitivity threshold.',
     icon: CheckCircle2,
   },
   sensitive: {
@@ -15,9 +15,14 @@ const stateDetails: Record<DecisionState, { title: string; detail: string; icon:
     icon: CircleAlert,
   },
   insufficient: {
-    title: 'Evidence is insufficient',
+    title: 'Insufficient evidence',
     detail: 'Confidence is too low to distinguish a supported preference. Collect better local evidence before interpreting results.',
     icon: CircleHelp,
+  },
+  'no-feasible': {
+    title: 'No feasible rotation',
+    detail: 'Every candidate violates at least one hard constraint under the current scenario, so no recommendation is supported.',
+    icon: ShieldAlert,
   },
 }
 
