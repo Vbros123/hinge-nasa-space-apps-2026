@@ -192,7 +192,7 @@ const titles: Record<ScreenId, string> = {
   evidence: 'Evidence & uncertainty',
 }
 
-export function ScienceWorkspace({ screen }: { screen: ScreenId }) {
+export function ScienceWorkspace({ screen, active }: { screen: ScreenId; active: boolean }) {
   const [index, setIndex] = useState<ScienceIndex>()
   const [scenario, setScenario] = useState('')
   const [parameter, setParameter] = useState('reference')
@@ -213,7 +213,7 @@ export function ScienceWorkspace({ screen }: { screen: ScreenId }) {
     return () => controller.abort()
   }, [retry])
 
-  const needsRows = screen !== 'farm' && screen !== 'evidence'
+  const needsRows = active && screen !== 'farm' && screen !== 'evidence'
   const rows = loaded?.scenario === scenario ? loaded.rows : undefined
 
   useEffect(() => {
@@ -229,6 +229,8 @@ export function ScienceWorkspace({ screen }: { screen: ScreenId }) {
     })
     return () => controller.abort()
   }, [index, scenario, needsRows, rows])
+  if (!active) return null
+
   const error = failure?.scope === 'index' || (needsRows && failure?.scope === scenario) ? failure : undefined
   return <div className="science-workspace">
     <SectionHeading eyebrow="FIELD SHIFT · JOHNSTON COUNTY, NC" title={titles[screen]} description="Explore crop-rotation trade-offs using archived NASA weather, USDA soil survey data and precomputed scientific results." />
