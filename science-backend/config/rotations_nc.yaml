@@ -1,0 +1,146 @@
+# Rotation templates v2 (Phase 2). Changes vs Phase 1 (config/phase1_frozen) are evidence-driven:
+#   full-season soybean harvest 10-05 -> 10-15 (NASS usual harvest begins Oct 10)
+#   winter wheat harvest 06-05 -> 06-10 and double-crop soybean planting 06-12 -> 06-15 (NASS wheat harvest begins May 30, most active Jun 10-30)
+#   rye after soybean planted 10-25 (was 10-20) so it follows the later soybean harvest with 10 days of slack
+horizon_years: 3
+rotations:
+  rotation_a:
+    name: Baseline corn-soybean-corn, winter fallow with retained residue
+    cash_sequence:
+    - corn
+    - soybean
+    - corn
+    cover_crops: []
+    residue_retained: true
+    operations:
+    - crop: corn
+      action: plant
+      date: 04-25
+      year_offset: 0
+    - crop: corn
+      action: harvest
+      date: 09-15
+      year_offset: 0
+    - crop: soybean
+      action: plant
+      date: 05-15
+      year_offset: 1
+    - crop: soybean
+      action: harvest
+      date: 10-15
+      year_offset: 1
+    - crop: corn
+      action: plant
+      date: 04-25
+      year_offset: 2
+    - crop: corn
+      action: harvest
+      date: 09-15
+      year_offset: 2
+    required_equipment:
+    - planter
+    - combine
+  rotation_b:
+    name: Cover-focused corn-soybean-corn with cereal rye between cash crops
+    cash_sequence:
+    - corn
+    - soybean
+    - corn
+    cover_crops:
+    - cereal_rye
+    residue_retained: true
+    operations:
+    - crop: corn
+      action: plant
+      date: 04-25
+      year_offset: 0
+    - crop: corn
+      action: harvest
+      date: 09-15
+      year_offset: 0
+    - crop: cereal_rye
+      action: plant
+      date: 10-15
+      year_offset: 0
+    - crop: cereal_rye
+      action: terminate
+      date: 04-05
+      year_offset: 1
+    - crop: soybean
+      action: plant
+      date: 05-15
+      year_offset: 1
+    - crop: soybean
+      action: harvest
+      date: 10-15
+      year_offset: 1
+    - crop: cereal_rye
+      action: plant
+      date: 10-25
+      year_offset: 1
+    - crop: cereal_rye
+      action: terminate
+      date: 04-05
+      year_offset: 2
+    - crop: corn
+      action: plant
+      date: 04-25
+      year_offset: 2
+    - crop: corn
+      action: harvest
+      date: 09-15
+      year_offset: 2
+    required_equipment:
+    - planter
+    - combine
+    - grain_drill
+    termination_method: herbicide
+  rotation_c:
+    name: Diversified corn - winter wheat - double-crop soybean
+    cash_sequence:
+    - corn
+    - winter_wheat
+    - soybean
+    cover_crops: []
+    residue_retained: true
+    operations:
+    - crop: corn
+      action: plant
+      date: 04-25
+      year_offset: 0
+    - crop: corn
+      action: harvest
+      date: 09-15
+      year_offset: 0
+    - crop: winter_wheat
+      action: plant
+      date: 10-25
+      year_offset: 0
+    - crop: winter_wheat
+      action: harvest
+      date: 06-10
+      year_offset: 1
+    - crop: soybean
+      action: plant
+      date: 06-15
+      year_offset: 1
+      label: double_crop
+    - crop: soybean
+      action: harvest
+      date: 10-25
+      year_offset: 1
+      label: double_crop
+    - crop: corn
+      action: plant
+      date: 04-25
+      year_offset: 2
+    - crop: corn
+      action: harvest
+      date: 09-15
+      year_offset: 2
+    required_equipment:
+    - planter
+    - combine
+    - grain_drill
+    requires_market_access:
+    - winter_wheat

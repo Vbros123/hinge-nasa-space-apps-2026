@@ -5,3 +5,5 @@ Archived NASA POWER meteorology, USDA SSURGO component and horizon data, and NAS
 The frontend packager verifies those outputs and publishes a catalog and one data file per historical window. The Vite application loads the catalog once per scientific workspace session and validates each window on request. The historical-window, objective and parameter selections stay synchronized while navigating its five views. The original synthetic workspace has separate state and its own scoring logic.
 
 See the [integration audit](FINAL_INTEGRATION_AUDIT.md) for the full file mapping and [deployment](DEPLOYMENT.md) for build and regeneration commands.
+
+The published [Python scientific backend](../science-backend/README.md) contains the original pipeline source. The farm and evidence screens fetch the catalog. A historical window is requested when entering a view that uses it.

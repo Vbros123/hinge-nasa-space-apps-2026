@@ -29,3 +29,5 @@ Of 191 HLS observations in the archive, 94 satisfy the usable-scene quality gate
 - Historical windows overlap. Parameter cases are modeled assumptions. Counts convey neither probabilities nor statistical confidence intervals.
 - Weather is gridded. Soil capacity is survey-derived. Crop parameters, equipment, market access, and field applicability have no independent local agronomist confirmation.
 - The daily screening model omits runoff and does not estimate yield, profitability, nutrients, carbon, or erosion.
+
+The [scientific backend](../science-backend/README.md) publishes the model and ingestion code. Full replay uses the separately distributed environmental bundle. See the [release verification](FINAL_RELEASE_VERIFICATION.md) for current evidence and deployment status.

@@ -1,0 +1,85 @@
+model_version: screening-v1
+
+# Site defaults. If data/demo/manifest.json supplies latitude/elevation, those override these.
+site:
+  name: Johnston County NC (demo point)
+  latitude_deg: 35.51
+  elevation_m: 50
+  status: assumed
+  note: "Approximate; replace from Person 1's manifest."
+
+et0:
+  method: penman_monteith       # penman_monteith | hargreaves_samani. Never switched silently.
+  albedo: 0.23
+  soil_heat_flux_mj_m2_day: 0.0
+  source: fao56
+
+water:
+  initial_storage_fraction: 0.5      # assumption: each block starts at 50% of S_max (after spin-up if enabled)
+  spinup_years: 0                    # 0 = no spin-up; the replay can prepend the prior year if weather exists
+  runoff_fraction: 0.0               # runoff is NOT modeled (no calibrated infiltration data); documented limitation
+  fallow_kc: 0.30                    # bare-soil evaporation proxy, never zero (assumption)
+  residue_kc_multiplier: 0.75        # retained residue reduces fallow evaporation (assumption, sensitivity-tested)
+  cover_kc: {initial: 0.40, mid: 1.00, end: 0.40}   # ASSUMPTION: FAO-56 has no cereal-rye cover Kc
+  mass_balance_tolerance_mm: 1.0e-9
+
+soil_storage_scenarios_mm:           # ILLUSTRATIVE (brief E.2). Replace with SSURGO-derived range from soils.json.
+  low_storage:    {value: 60,  status: illustrative}
+  medium_storage: {value: 100, status: illustrative}
+  high_storage:   {value: 140, status: illustrative}
+
+cover_function:                      # planned-calendar living-cover fraction L_t in [0,1]; NOT NDVI
+  ramp_days: 45                      # linear 0->1 after planting; linear 1->0 over `decline_days` after termination/harvest
+  decline_days: 10
+  status: assumed
+
+heat_exposure:
+  tmax_threshold_c: null             # no sourced crop-specific threshold -> descriptive exposure only
+  descriptive_thresholds_c: [30, 35]
+
+history:
+  block_years: 3
+  allow_incomplete_years: false      # a year missing any required day/variable excludes the whole block
+
+# Demonstration management assumptions (brief B.2). Override per farm.
+management_defaults:
+  equipment_available: [planter, combine, grain_drill]
+  termination_methods_available: [herbicide]
+  market_access_confirmed: {winter_wheat: true}   # ASSUMPTION for the demo: set false to see rotation_c rejected
+  excluded_crops: []
+  irrigation: rainfed
+  status: assumed
+
+min_slack_days_warning: 3          # assumed "practical slack" threshold; below it a warning is raised (not a rejection)
+
+# Sensitivity parameter sets (brief E). Each one is traceable and labeled by evidence status.
+parameter_sets:
+  reference:
+    storage: medium_storage
+    status: reference
+  low_storage:
+    storage: low_storage
+    status: illustrative
+  high_storage:
+    storage: high_storage
+    status: illustrative
+  kc_end_sourced_alt:                # FAO-56 gives corn Kc end 0.35 for wet-harvested grain and wheat 0.25-0.40
+    storage: medium_storage
+    kc_overrides: {corn: {kc_end: 0.35}, winter_wheat: {kc_end: 0.40}}
+    status: sourced_alternative
+  rye_terminate_early:               # 03-25 is the earliest date in the NC State window
+    storage: medium_storage
+    op_overrides: [{crop: cereal_rye, action: terminate, date: "03-25"}]
+    status: sourced_window_bound
+  rye_terminate_late:                # 04-15 keeps the 7-14 day gap before the 04-25 corn planting
+    storage: medium_storage
+    op_overrides: [{crop: cereal_rye, action: terminate, date: "04-15"}]
+    status: sourced_window_bound
+  corn_plant_early:
+    storage: medium_storage
+    shift_days: [{crop: corn, action: plant, days: -10}]
+    status: assumed_range
+  corn_plant_late:
+    storage: medium_storage
+    shift_days: [{crop: corn, action: plant, days: 10}]
+    status: assumed_range

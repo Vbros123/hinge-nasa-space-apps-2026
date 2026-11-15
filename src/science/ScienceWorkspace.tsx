@@ -167,6 +167,8 @@ function Evidence({ index }: { index: ScienceIndex }) {
         <li><strong>Assumed.</strong> Site applicability, equipment, management, planting dates and crop parameters carry the statuses in the model manifest.</li>
       </ul>
       <p>{index.manifest.review_status}. Agricultural screening for an illustrative study area.</p>
+      <p>FAO-56 estimates reference evapotranspiration. The daily soil-water balance tracks how rainfall, storage and crop demand interact under each rotation calendar.</p>
+      <p><a href="https://github.com/Vbros123/hinge-nasa-space-apps-2026">GitHub source</a> · <a href="https://github.com/Vbros123/hinge-nasa-space-apps-2026/blob/main/science-backend/docs/scientific_methodology.md">Scientific methodology</a></p>
       <ul>{index.explanations.global_limitations.map(item => <li key={item.code}>{item.message}</li>)}</ul>
       <Details title="Model manifest, assumptions, accepted years and input hashes" value={index.manifest} />
       <Details title="Environmental source manifest" value={index.environment} />
@@ -211,8 +213,11 @@ export function ScienceWorkspace({ screen }: { screen: ScreenId }) {
     return () => controller.abort()
   }, [retry])
 
+  const needsRows = screen !== 'farm' && screen !== 'evidence'
+  const rows = loaded?.scenario === scenario ? loaded.rows : undefined
+
   useEffect(() => {
-    if (!index || !scenario) return
+    if (!index || !scenario || !needsRows || rows) return
     const controller = new AbortController()
     loadWindow(index, scenario, controller.signal).then(rows => {
       if (!controller.signal.aborted) {
@@ -223,10 +228,7 @@ export function ScienceWorkspace({ screen }: { screen: ScreenId }) {
       if (!controller.signal.aborted) setFailure({ scope: scenario, detail: error.message })
     })
     return () => controller.abort()
-  }, [index, scenario])
-
-  const rows = loaded?.scenario === scenario ? loaded.rows : undefined
-  const needsRows = screen !== 'farm' && screen !== 'evidence'
+  }, [index, scenario, needsRows, rows])
   const error = failure?.scope === 'index' || (needsRows && failure?.scope === scenario) ? failure : undefined
   return <div className="science-workspace">
     <SectionHeading eyebrow="FIELD SHIFT · JOHNSTON COUNTY, NC" title={titles[screen]} description="Explore crop-rotation trade-offs using archived NASA weather, USDA soil survey data and precomputed scientific results." />

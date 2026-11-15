@@ -1,0 +1,35 @@
+{
+  "type": "Feature",
+  "properties": {
+    "polygon_id": "johnston_demo_aoi_v1",
+    "boundary_classification": "assumed_demonstration_rectangle_not_a_farm",
+    "location_status": "provisional_county_and_agricultural_use_unverified"
+  },
+  "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+      [
+        [
+          -78.405,
+          35.495
+        ],
+        [
+          -78.395,
+          35.495
+        ],
+        [
+          -78.395,
+          35.505
+        ],
+        [
+          -78.405,
+          35.505
+        ],
+        [
+          -78.405,
+          35.495
+        ]
+      ]
+    ]
+  }
+}

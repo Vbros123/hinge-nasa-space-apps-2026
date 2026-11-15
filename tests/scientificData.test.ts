@@ -36,6 +36,16 @@ describe('archived Phase 3 frontend contract', () => {
     expect(() => validateWindow(invalid, index, scenario)).toThrow()
   })
 
+  it('rejects empty catalogs, missing evidence and unsupported parameter sets', () => {
+    expect(() => validateIndex({})).toThrow()
+    const withoutEvidence = structuredClone(index)
+    Reflect.deleteProperty(withoutEvidence, 'vegetation')
+    expect(() => validateIndex(withoutEvidence)).toThrow()
+    const rows = firstWindow()
+    rows[0].parameter_set_id = 'not_in_archive'
+    expect(() => validateWindow(rows, index, scenario)).toThrow()
+  })
+
   it('handles ties and omits missing and excluded candidates', () => {
     const rows = firstWindow().filter(row => row.parameter_set_id === 'reference')
     rows[0].metrics.water_deficit_mm = 12

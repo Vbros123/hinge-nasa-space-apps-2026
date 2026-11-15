@@ -1,0 +1,57 @@
+# Rotation templates. Operations are listed in calendar order; year_offset 0 = first calendar year of the 3-year block.
+# Each operation: {crop, action: plant|harvest|terminate, date: MM-DD, year_offset, label?}
+# Dates are the modeled schedule (central assumption); feasibility.py checks them against crops_nc.yaml.
+# The identical schedule is replayed on every historical block; only the weather changes.
+
+horizon_years: 3
+
+rotations:
+  rotation_a:
+    name: Baseline corn-soybean-corn, winter fallow with retained residue
+    cash_sequence: [corn, soybean, corn]
+    cover_crops: []
+    residue_retained: true
+    operations:
+      - {crop: corn,    action: plant,   date: "04-25", year_offset: 0}
+      - {crop: corn,    action: harvest, date: "09-15", year_offset: 0}
+      - {crop: soybean, action: plant,   date: "05-15", year_offset: 1}
+      - {crop: soybean, action: harvest, date: "10-05", year_offset: 1}
+      - {crop: corn,    action: plant,   date: "04-25", year_offset: 2}
+      - {crop: corn,    action: harvest, date: "09-15", year_offset: 2}
+    required_equipment: [planter, combine]
+
+  rotation_b:
+    name: Cover-focused corn-soybean-corn with cereal rye between cash crops
+    cash_sequence: [corn, soybean, corn]
+    cover_crops: [cereal_rye]
+    residue_retained: true
+    operations:
+      - {crop: corn,       action: plant,     date: "04-25", year_offset: 0}
+      - {crop: corn,       action: harvest,   date: "09-15", year_offset: 0}
+      - {crop: cereal_rye, action: plant,     date: "10-15", year_offset: 0}
+      - {crop: cereal_rye, action: terminate, date: "04-05", year_offset: 1}
+      - {crop: soybean,    action: plant,     date: "05-15", year_offset: 1}
+      - {crop: soybean,    action: harvest,   date: "10-05", year_offset: 1}
+      - {crop: cereal_rye, action: plant,     date: "10-20", year_offset: 1}
+      - {crop: cereal_rye, action: terminate, date: "04-05", year_offset: 2}
+      - {crop: corn,       action: plant,     date: "04-25", year_offset: 2}
+      - {crop: corn,       action: harvest,   date: "09-15", year_offset: 2}
+    required_equipment: [planter, combine, grain_drill]
+    termination_method: herbicide
+
+  rotation_c:
+    name: Diversified corn - winter wheat - double-crop soybean
+    cash_sequence: [corn, winter_wheat, soybean]
+    cover_crops: []
+    residue_retained: true
+    operations:
+      - {crop: corn,         action: plant,   date: "04-25", year_offset: 0}
+      - {crop: corn,         action: harvest, date: "09-15", year_offset: 0}
+      - {crop: winter_wheat, action: plant,   date: "10-25", year_offset: 0}
+      - {crop: winter_wheat, action: harvest, date: "06-05", year_offset: 1}
+      - {crop: soybean,      action: plant,   date: "06-12", year_offset: 1, label: double_crop}
+      - {crop: soybean,      action: harvest, date: "10-25", year_offset: 1, label: double_crop}
+      - {crop: corn,         action: plant,   date: "04-25", year_offset: 2}
+      - {crop: corn,         action: harvest, date: "09-15", year_offset: 2}
+    required_equipment: [planter, combine, grain_drill]
+    requires_market_access: [winter_wheat]

@@ -1,0 +1,436 @@
+{
+  "aliases_note": "column aliases (engine/compat.py) are applied silently only to column names, never to units",
+  "assumed_parameters": {
+    "cover_function": {
+      "decline_days": 10,
+      "note": "ramp_days and decline_days assumed",
+      "ramp_days": 45,
+      "status": "assumed"
+    },
+    "cover_kc": {
+      "end": 0.4,
+      "initial": 0.4,
+      "mid": 1.0
+    },
+    "crop_windows_marked_assumed": [],
+    "fallow_kc": 0.3,
+    "initial_storage_fraction": 0.5,
+    "residue_kc_multiplier": 0.75,
+    "runoff": "not modeled (runoff_fraction=0.0)"
+  },
+  "config_sha256": {
+    "crops_nc.yaml": "6444c5b9bdb815c039e6f107b3ffced169a7c8e21c5228e590f0d8ff11d88519",
+    "model_parameters.yaml": "aeb0f67efdc1f6a2a0329f447732318d9c6c3a3be30ba09632e58700feefa9ad",
+    "rotations_nc.yaml": "15807963ae0b35a3728c8c57e0627f5adaa621691d76b5ac6404997913442799"
+  },
+  "data_provenance": {
+    "polygon_id": "johnston_demo_aoi_v1",
+    "schema_version": "hinge.environment.v2",
+    "source_manifest_sha256": "deb508c13adf3b14cd86e3993f6729a9908836199b13d49c4f0a521e889fd6cc",
+    "time_standard": "NASA POWER LST"
+  },
+  "dependencies": {
+    "numpy": "2.3.5",
+    "pandas": "2.2.3",
+    "pyarrow": "26.0.1",
+    "yaml": "6.0.3"
+  },
+  "et0_method": "FAO-56 Penman-Monteith (RH-mean vapor pressure, Eq. 19)",
+  "excluded_years": {
+    "1981": "missing values in ['solar_radiation']; quality flags present; source model_ready false",
+    "1982": "missing values in ['solar_radiation']; quality flags present; source model_ready false",
+    "1983": "missing values in ['solar_radiation']; quality flags present; source model_ready false"
+  },
+  "input_sha256": {
+    "manifest.json": "deb508c13adf3b14cd86e3993f6729a9908836199b13d49c4f0a521e889fd6cc",
+    "soils.json": "90df5ba6d37b88ab8750bac5ec49d70e15fae80f8ffe7364591a96ddf5ab6191",
+    "vegetation.parquet": "c2623d6c129e5aa82623d99f2dc048047b6318840ea336045b56b2a4a74cb1e3",
+    "weather.parquet": "76311fb33872f12c7319a4b424346fd0c38436a2ec43e7a22a533dd3bcf2abe8"
+  },
+  "limitations": [
+    "Screening water bucket; not APSIM/DSSAT. No yield, nutrient, carbon, disease or erosion prediction.",
+    "Historical weather blocks are stress-test scenarios, not forecast probabilities.",
+    "Water deficit is modeled unmet demand, not crop damage."
+  ],
+  "management": {
+    "equipment_available": [
+      "planter",
+      "combine",
+      "grain_drill"
+    ],
+    "excluded_crops": [],
+    "irrigation": "rainfed",
+    "market_access_confirmed": {
+      "winter_wheat": true
+    },
+    "status": "assumed",
+    "termination_methods_available": [
+      "herbicide"
+    ]
+  },
+  "model_version": "screening-v2",
+  "n_historical_blocks": 40,
+  "n_nonoverlapping_blocks_max": 14,
+  "parameter_sets": {
+    "corn_plant_early": {
+      "category": "corn_planting",
+      "shift_days": [
+        {
+          "action": "plant",
+          "crop": "corn",
+          "days": -10
+        }
+      ],
+      "status": "assumed_range",
+      "storage": "medium_storage"
+    },
+    "corn_plant_late": {
+      "category": "corn_planting",
+      "shift_days": [
+        {
+          "action": "plant",
+          "crop": "corn",
+          "days": 10
+        }
+      ],
+      "status": "assumed_range",
+      "storage": "medium_storage"
+    },
+    "corn_stage_alt": {
+      "category": "kc_stage",
+      "stage_overrides": {
+        "corn": {
+          "development": 35,
+          "initial": 20,
+          "late": 30,
+          "mid": 40
+        }
+      },
+      "status": "sourced_secondary_alternative",
+      "storage": "medium_storage"
+    },
+    "cover_kc_high": {
+      "category": "cover_development",
+      "note": "winter-wheat-like Kc (FAO-56 Table 12 analogue); upper bound",
+      "status": "assumed_range",
+      "storage": "medium_storage",
+      "water_overrides": {
+        "cover_kc": {
+          "end": 0.25,
+          "initial": 0.7,
+          "mid": 1.15
+        }
+      }
+    },
+    "cover_kc_low": {
+      "category": "cover_development",
+      "status": "assumed_range",
+      "storage": "medium_storage",
+      "water_overrides": {
+        "cover_kc": {
+          "end": 0.3,
+          "initial": 0.3,
+          "mid": 0.8
+        }
+      }
+    },
+    "cover_ramp_fast": {
+      "category": "cover_development",
+      "cover_function_overrides": {
+        "ramp_days": 30
+      },
+      "status": "assumed_range",
+      "storage": "medium_storage"
+    },
+    "cover_ramp_slow": {
+      "category": "cover_development",
+      "cover_function_overrides": {
+        "ramp_days": 60
+      },
+      "status": "assumed_range",
+      "storage": "medium_storage"
+    },
+    "fallow_kc_high": {
+      "category": "fallow_residue",
+      "status": "assumed_range",
+      "storage": "medium_storage",
+      "water_overrides": {
+        "fallow_kc": 0.5
+      }
+    },
+    "fallow_kc_low": {
+      "category": "fallow_residue",
+      "status": "assumed_range",
+      "storage": "medium_storage",
+      "water_overrides": {
+        "fallow_kc": 0.15
+      }
+    },
+    "high_storage": {
+      "category": "soil_storage",
+      "status": "illustrative",
+      "storage": "high_storage"
+    },
+    "init_storage_25": {
+      "category": "initial_storage",
+      "status": "assumed_range",
+      "storage": "medium_storage",
+      "water_overrides": {
+        "initial_storage_fraction": 0.25
+      }
+    },
+    "init_storage_75": {
+      "category": "initial_storage",
+      "status": "assumed_range",
+      "storage": "medium_storage",
+      "water_overrides": {
+        "initial_storage_fraction": 0.75
+      }
+    },
+    "kc_end_sourced_alt": {
+      "category": "kc",
+      "kc_overrides": {
+        "corn": {
+          "kc_end": 0.35
+        },
+        "winter_wheat": {
+          "kc_end": 0.4
+        }
+      },
+      "status": "sourced_alternative",
+      "storage": "medium_storage"
+    },
+    "kc_mid_humid_adj": {
+      "category": "kc",
+      "kc_overrides": {
+        "corn": {
+          "kc_mid": 1.165
+        },
+        "soybean": {
+          "kc_mid": 1.124
+        },
+        "winter_wheat": {
+          "kc_mid": 1.121
+        }
+      },
+      "note": "FAO-56 Eq. 62 humid-climate adjustment with ASSUMED u2=2 m/s and RHmin=55%, heights 2.0/0.75/1.0 m",
+      "status": "inferred_fao56_eq62",
+      "storage": "medium_storage"
+    },
+    "low_storage": {
+      "category": "soil_storage",
+      "status": "illustrative",
+      "storage": "low_storage"
+    },
+    "reference": {
+      "category": "reference",
+      "status": "reference",
+      "storage": "medium_storage"
+    },
+    "residue_mult_none": {
+      "category": "fallow_residue",
+      "status": "assumed_range",
+      "storage": "medium_storage",
+      "water_overrides": {
+        "residue_kc_multiplier": 1.0
+      }
+    },
+    "residue_mult_strong": {
+      "category": "fallow_residue",
+      "status": "assumed_range",
+      "storage": "medium_storage",
+      "water_overrides": {
+        "residue_kc_multiplier": 0.5
+      }
+    },
+    "rye_terminate_early": {
+      "category": "cover_termination",
+      "op_overrides": [
+        {
+          "action": "terminate",
+          "crop": "cereal_rye",
+          "date": "03-25"
+        }
+      ],
+      "status": "sourced_window_bound",
+      "storage": "medium_storage"
+    },
+    "rye_terminate_late": {
+      "category": "cover_termination",
+      "op_overrides": [
+        {
+          "action": "terminate",
+          "crop": "cereal_rye",
+          "date": "04-15"
+        }
+      ],
+      "status": "sourced_window_bound",
+      "storage": "medium_storage"
+    },
+    "spinup_1yr": {
+      "category": "initial_storage",
+      "note": "initial storage = end-of-previous-year storage from a rotation-independent fallow-with-residue run starting at 50%; falls back to 50% when no complete preceding year exists",
+      "spinup_years": 1,
+      "status": "method_alternative",
+      "storage": "medium_storage"
+    },
+    "wheat_kc_ini_frozen": {
+      "category": "kc",
+      "kc_overrides": {
+        "winter_wheat": {
+          "kc_initial": 0.4
+        }
+      },
+      "note": "FAO-56 Table 12 value for frozen soils",
+      "status": "sourced_alternative",
+      "storage": "medium_storage"
+    },
+    "wheat_stage_idaho": {
+      "category": "kc_stage",
+      "stage_overrides": {
+        "winter_wheat": {
+          "development": 75,
+          "initial": 160,
+          "late": 25,
+          "mid": 75
+        }
+      },
+      "status": "sourced_secondary_alternative",
+      "storage": "medium_storage"
+    },
+    "wheat_stage_winter_cereal": {
+      "category": "kc_stage",
+      "stage_overrides": {
+        "winter_wheat": {
+          "development": 60,
+          "initial": 20,
+          "late": 30,
+          "mid": 70
+        }
+      },
+      "status": "sourced_secondary_alternative",
+      "storage": "medium_storage"
+    }
+  },
+  "python": "3.12.14",
+  "review_status": "crop parameters unverified by a human reviewer",
+  "scenario_ids": [
+    "historical_1984_1986",
+    "historical_1985_1987",
+    "historical_1986_1988",
+    "historical_1987_1989",
+    "historical_1988_1990",
+    "historical_1989_1991",
+    "historical_1990_1992",
+    "historical_1991_1993",
+    "historical_1992_1994",
+    "historical_1993_1995",
+    "historical_1994_1996",
+    "historical_1995_1997",
+    "historical_1996_1998",
+    "historical_1997_1999",
+    "historical_1998_2000",
+    "historical_1999_2001",
+    "historical_2000_2002",
+    "historical_2001_2003",
+    "historical_2002_2004",
+    "historical_2003_2005",
+    "historical_2004_2006",
+    "historical_2005_2007",
+    "historical_2006_2008",
+    "historical_2007_2009",
+    "historical_2008_2010",
+    "historical_2009_2011",
+    "historical_2010_2012",
+    "historical_2011_2013",
+    "historical_2012_2014",
+    "historical_2013_2015",
+    "historical_2014_2016",
+    "historical_2015_2017",
+    "historical_2016_2018",
+    "historical_2017_2019",
+    "historical_2018_2020",
+    "historical_2019_2021",
+    "historical_2020_2022",
+    "historical_2021_2023",
+    "historical_2022_2024",
+    "historical_2023_2025"
+  ],
+  "site": {
+    "elevation_m": 50.19,
+    "latitude_deg": 35.5,
+    "name": "NASA POWER source grid point",
+    "note": "POWER source geometry; field elevation unverified",
+    "region": "coastal_plain",
+    "region_status": "assumed (Johnston County straddles the Coastal Plain / Piedmont boundary; NC State region assignment not verified)",
+    "status": "source-reported grid elevation; not field survey"
+  },
+  "site_from": "NASA POWER archived source_geometry (grid point/elevation; not surveyed field elevation)",
+  "skipped_parameter_sets": {},
+  "soil_coverage": {
+    "component_count": 36,
+    "known_aoi_component_mass": 0.8924041134529492,
+    "method": "area_fraction * component_fraction; weighted conditional discrete quantiles; missing mass not allocated",
+    "unknown_aoi_component_mass": 0.10759588654705078
+  },
+  "soil_scenarios": {
+    "high_storage": {
+      "status": "ssurgo_component_capacity_conditional_sensitivity",
+      "value": 170.0
+    },
+    "low_storage": {
+      "status": "ssurgo_component_capacity_conditional_sensitivity",
+      "value": 97.0
+    },
+    "medium_storage": {
+      "status": "ssurgo_component_capacity_conditional_sensitivity",
+      "value": 129.3
+    }
+  },
+  "soil_source": "SSURGO component-capacity weighted quantiles (10/50/90), conditional on mapped known mass; 100 cm assumed integration target",
+  "statistical_note": "Overlapping 3-year blocks are strongly correlated; do not treat n_historical_blocks as an independent sample size.",
+  "usable_weather_years": [
+    1984,
+    1985,
+    1986,
+    1987,
+    1988,
+    1989,
+    1990,
+    1991,
+    1992,
+    1993,
+    1994,
+    1995,
+    1996,
+    1997,
+    1998,
+    1999,
+    2000,
+    2001,
+    2002,
+    2003,
+    2004,
+    2005,
+    2006,
+    2007,
+    2008,
+    2009,
+    2010,
+    2011,
+    2012,
+    2013,
+    2014,
+    2015,
+    2016,
+    2017,
+    2018,
+    2019,
+    2020,
+    2021,
+    2022,
+    2023,
+    2024,
+    2025
+  ]
+}

@@ -1,0 +1,124 @@
+# Evidence register: one entry per cited source location used by a parameter. Ids are referenced from crops_nc.yaml `evidence_ids`.
+# evidence_type: direct (value stated in the source) | inferred (our reading/combination) | secondary (transcription or press quote of a primary source)
+# NOTE: pages were read by the build agent in the sandbox on 2026-11-14; no human reviewer has confirmed them (review_status: unverified).
+entries:
+  ev_nass_usual_dates:
+    title: "North Carolina Agricultural Statistics, Section 4, 'Usual Planting and Harvesting Dates' (p. 58)"
+    publisher: "USDA NASS, North Carolina Field Office / NC Dept. of Agriculture"
+    url: https://www.nass.usda.gov/Statistics_by_State/North_Carolina/Publications/Annual_Statistical_Bulletin/AgStat/Section05.pdf
+    location: "p. 58 table: Corn grain, Soybeans, Wheat grain rows (Begin / Most Active / End)"
+    publication_date: "edition containing 2023-2024 annual summaries (exact release date not verified)"
+    geography: "North Carolina statewide (not Johnston County specific)"
+    evidence_type: direct
+    values: {corn_plant: "Apr 1 | Apr 10-Apr 25 | May 20", corn_harvest: "Aug 20 | Sep 10-Oct 10 | Oct 10", soybean_plant: "May 1 | May 20-Jun 30 | Jul 20", soybean_harvest: "Oct 10 | Nov 10-Dec 5 | Dec 20", wheat_plant: "Sep 20 | Oct 15-Nov 20 | Dec 20", wheat_harvest: "May 30 | Jun 10-Jun 30 | Jul 25"}
+    uncertainty: "Describes usual practice, not an agronomic limit. Statewide range spans coast to mountains. Soybean row mixes full-season and double-crop."
+  ev_ncsu_cover_crops:
+    title: "Winter Annual Cover Crops (SoilFacts AG-439-58)"
+    publisher: "NC State Extension (Gatiboni, Reberg-Horton)"
+    url: https://content.ces.ncsu.edu/winter-annual-cover-crops
+    location: "Table 1 (legumes), Table 4 (small grains), 'Legume Nitrogen Economics', 'Cover Crop Mixtures: Multiple Benefits', 'Small Grains Cover Crop Establishment'"
+    publication_date: "published 2021-09-10; page shows reviewed/revised 2026-09-18"
+    geography: "Table rows for Mountains / Piedmont / Coastal Plain"
+    evidence_type: direct
+    values: {rye_coastal: "preferred Sep 30-Nov 15; possible Sep 30-Dec 15", rye_piedmont: "preferred Sep 15-Oct 15; possible Sep 15-Nov 15", clover_coastal: "preferred Sep 1-30; possible Sep 1-Oct 30", clover_piedmont: "Aug 25-Oct 1", termination: "kill near April 1 in the east, mid to late April in the piedmont and mountains", gap: "kill small grain 7 to 14 days before corn planting", hessian_fly: "plant wheat after first fall frost if fly present"}
+    uncertainty: "Johnston County straddles Coastal Plain / Piedmont; region assignment not verified. Termination guidance is a rule of thumb (inferred date bounds Mar 25-Apr 30)."
+  ev_ncsu_corn_late:
+    title: "Management for Late Planted Corn"
+    publisher: "NC State Extension corn.ces.ncsu.edu"
+    url: https://corn.ces.ncsu.edu/corn-production-information/management-for-late-planted-corn
+    location: "Introduction; 'Planting Date and Seeding Rates for Late-Planted Corn'"
+    publication_date: "not shown on retrieved text"
+    geography: "Piedmont Research Station NC (2001-2002) and Virginia"
+    evidence_type: direct
+    values: {late_planting: "mid to late June with reasonable opportunity for profit", hybrid_maturity: "108-114 days for late planting"}
+    uncertainty: "Old trials, Piedmont; yield penalties for late planting not quantified here."
+  ev_ncsu_soy_double:
+    title: "What Is the Best Soybean Maturity Group to Plant Behind Wheat?"
+    publisher: "NC State Soybean Extension (R. Vann)"
+    url: https://soybeans.ces.ncsu.edu/2022/03/what-is-the-best-soybean-maturity-group-to-plant-behind-wheat
+    location: "opening paragraphs"
+    publication_date: "2022-03 (updated 2022-04-11)"
+    geography: "North Carolina"
+    evidence_type: direct
+    values: {double_crop: "15-35% of NC soybean acres follow a small grain; typical planting 2nd week of June through early July"}
+    uncertainty: "Descriptive of practice. Maturity groups MG4-7 are described as flexible for mid-June to mid-July planting (other NC State posts)."
+  ev_ncsu_soy_fullseason:
+    title: "Plant Full-Season Soybeans by Mid-May to Prevent Yield Loss"
+    publisher: "NC State Soybean Extension"
+    url: https://soybeans.ces.ncsu.edu/2023/05/plant-full-season-soybeans-by-mid-may-to-prevent-yield-loss/
+    location: "text and Figure 1"
+    publication_date: "2023-05"
+    geography: "North Carolina, 15 environments, 2019-2022"
+    evidence_type: direct
+    values: {full_season: "delaying planting past mid-May decreases yield"}
+    uncertainty: "Recommendation direction only; no hard cut-off date."
+  ev_soy_guide_press:
+    title: "Early planting key to top soybean yields (quotes NC State Soybean Production Guide optimum May 1 - June 10)"
+    publisher: "Southeast Farm Press"
+    url: https://www.farmprogress.com/management/early-planting-key-to-top-soybean-yields
+    location: "body text"
+    publication_date: "not verified"
+    geography: "North Carolina"
+    evidence_type: secondary
+    values: {full_season: "optimal May 1 - June 10"}
+    uncertainty: "Press quote of the guide; the guide itself was not read."
+  ev_wheat_start:
+    title: "Should I Plant Wheat Early? (cites NC Small Grains Production Guide start-date map)"
+    publisher: "NC State Extension, Person County Center"
+    url: https://person.ces.ncsu.edu/2023/09/should-i-plant-wheat-early/
+    location: "closing advice paragraph"
+    publication_date: "2023-09"
+    geography: "Piedmont (Person County)"
+    evidence_type: secondary
+    values: {start: "Oct 15-20 recommended start for planting"}
+    uncertainty: "AG-850 map not retrieved; Johnston County start date not read directly."
+  ev_wheat_sampson:
+    title: "Wheat Planting Recommendations"
+    publisher: "NC State Extension, Sampson County Center"
+    url: https://sampson.ces.ncsu.edu/2025/10/wheat-planting-recommendations/
+    location: "first paragraphs"
+    publication_date: "2025-10"
+    geography: "Coastal Plain county adjacent to Johnston"
+    evidence_type: direct
+    values: {optimum: "late October through Thanksgiving; yields may decline after Thanksgiving"}
+    uncertainty: "County newsletter opinion; adjacent county, not Johnston."
+  ev_fao56_t12:
+    title: "FAO Irrigation and Drainage Paper 56, Table 12 (single Kc) and Table 11 (stage lengths)"
+    publisher: "FAO (Allen, Pereira, Raes, Smith 1998)"
+    url: https://www.fao.org/4/x0490e/x0490e00.htm
+    location: "Chapter 6, Tables 11 and 12; Eq. 62-65 for climate adjustment"
+    publication_date: "1998 (errata 2006)"
+    geography: "Global; Table 12 for sub-humid climates (RHmin about 45%, u2 about 2 m/s)"
+    evidence_type: direct
+    values: {corn_grain: "Kc 0.30/1.20/0.60 (0.35 after field drying)", soybean: "0.40/1.15/0.50", winter_wheat: "ini 0.4 frozen soils, 0.7 non-frozen soils; mid 1.15; end 0.25-0.40"}
+    uncertainty: "Values re-confirmed via secondary reproductions (Clemson, ASABE chapter, calculators) in the sandbox; Table 12 itself not page-checked by a human."
+  ev_fao56_t11_secondary:
+    title: "FAO-56 Table 11 stage lengths as reproduced by irrigationcalculators.com and Clemson LGP"
+    publisher: "secondary transcription"
+    url: https://irrigationcalculators.com/reference/crop-coefficient-table
+    location: "stage-length rows"
+    publication_date: "not stated"
+    geography: "Soybean Central USA May: 20/30-35/60/25 (140 d). Winter wheat Idaho Oct: 160/75/75/25 (335 d). Maize grain Idaho Apr: 30/40/50/50 (170 d); another listing 20/35/40/30."
+    evidence_type: secondary
+    values: {soybean: "20/30/60/25", wheat_idaho: "160/75/75/25", corn_idaho: "30/40/50/50", corn_alt: "20/35/40/30", winter_cereal_example: "20/60/70/30 (teaching note citing FAO-56, upm.es)"}
+    uncertainty: "None are North Carolina rows. Phase 1 corn 30/40/50/30 and wheat 30/140/40/30 could not be matched to a retrieved Table 11 row."
+  ev_fao56_examples:
+    title: "FAO-56 Examples 17 and 18 as encoded in an independent R test suite"
+    publisher: "WDNR-Water-Use CSLSevap tests/testthat/test_FAO.R"
+    url: https://rdrr.io/github/WDNR-Water-Use/CSLSevap/src/tests/testthat/test_FAO.R
+    location: "test_that blocks 'FAO Example #18' and '#17'"
+    publication_date: "package docs built 2021-04"
+    geography: "Uccle, Belgium (Ex. 18); Bangkok, Thailand (Ex. 17)"
+    evidence_type: secondary
+    values: {ex18_et0: 3.880142, ex17_et0: 5.718284, published_fao: "3.9 and 5.7 mm/day"}
+    uncertainty: "Another implementation of the same FAO equations; checks our arithmetic, is not observational validation."
+  ev_nass_johnston:
+    title: "North Carolina Agricultural Statistics county tables (corn, soybeans, wheat, 2023)"
+    publisher: "USDA NASS, North Carolina"
+    url: https://www.nass.usda.gov/Statistics_by_State/North_Carolina/Publications/Annual_Statistical_Bulletin/AgStat/Section05.pdf
+    location: "pp. 64-65 (corn), 73-74 (soybeans), 79-80 (wheat): Johnston row"
+    publication_date: "edition containing 2023-2024 summaries"
+    geography: "Johnston County"
+    evidence_type: direct
+    values: {corn_2023_planted_acres: 7300, soybean_2023_planted_acres: 49000, wheat_2023_planted_acres: 9600}
+    uncertainty: "Shows the crops are commercially grown in the county, which supports (does not prove) the feasibility of the cash-crop sequences there. NASS stopped county wheat estimates after 2023."

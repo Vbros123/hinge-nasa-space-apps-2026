@@ -25,6 +25,8 @@ npm run build
 npm run preview
 ```
 
-Use the [integration report](docs/INTEGRATION_REPORT.md) for methodology, sources, and release evidence. See the [reproducibility and deployment guide](docs/DEPLOYMENT.md) to regenerate the data and deploy.
+To see how an assumption changes the decision, open **Decision explorer**, select a historical window and an objective, then switch from **Reference** to a tested soil-storage case. Compare the change from reference and the eligible rotations for that objective.
+
+The [Python scientific engine](science-backend/README.md) includes the calculation source, input contract, tests, and replay instructions. Use the [integration report](docs/INTEGRATION_REPORT.md) for methodology, sources, and release evidence. See the [reproducibility and deployment guide](docs/DEPLOYMENT.md) to regenerate the data and deploy.
 
 Results are conditional screening estimates. Site applicability, farm management and crop parameters require local agronomic review. The model does not predict yield, profit, soil loss, or future weather.
