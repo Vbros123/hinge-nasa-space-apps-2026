@@ -1,7 +1,6 @@
 import {
   Activity,
   BookOpenCheck,
-  ChevronDown,
   CircleHelp,
   GitCompareArrows,
   Globe2,
@@ -23,11 +22,13 @@ const navigation: Array<{ id: ScreenId; label: string; icon: typeof Sprout }> = 
 
 export function Sidebar({
   active,
+  demo = true,
   onNavigate,
   collapsed,
   onToggle,
 }: {
   active: ScreenId
+  demo?: boolean
   onNavigate: (screen: ScreenId) => void
   collapsed: boolean
   onToggle: () => void
@@ -41,19 +42,19 @@ export function Sidebar({
           {collapsed ? <PanelLeftOpen size={16} /> : <PanelLeftClose size={16} />}
         </button>
       </div>
-      {!collapsed && <div className="workspace-picker"><div className="workspace-avatar">PV</div><div><strong>Prairie View</strong><small>Demo workspace</small></div><ChevronDown size={14} /></div>}
+      {!collapsed && <div className="workspace-picker"><div className="workspace-avatar">{demo ? "PV" : "JC"}</div><div><strong>{demo ? "Prairie View" : "Johnston County"}</strong><small>{demo ? "Demo workspace" : "Study area"}</small></div></div>}
       <div className="nav-caption">{!collapsed && 'WORKSPACE'}</div>
       <nav className="side-nav" aria-label="Primary navigation">
         {navigation.map(({ id, label, icon: Icon }) => (
           <button key={id} className={`nav-item ${active === id ? 'nav-active' : ''}`} onClick={() => onNavigate(id)} title={collapsed ? label : undefined}>
-            <Icon size={18} strokeWidth={1.8} /><span>{label}</span>{id === 'boundary' && !collapsed && <i className="nav-new">CORE</i>}
+            <Icon size={18} strokeWidth={1.8} /><span>{label}</span>
           </button>
         ))}
       </nav>
       {!collapsed && (
         <div className="sidebar-bottom">
-          <div className="data-mode"><span className="pulse-dot" /><div><strong>Demo mode</strong><small>Synthetic fixtures active</small></div></div>
-          <button className="help-link"><CircleHelp size={16} /> Methodology & help</button>
+          <div className="data-mode"><span className="pulse-dot" /><div><strong>{demo ? "Demo mode" : "Scientific analysis"}</strong><small>{demo ? "Synthetic fixtures active" : "Archived model results"}</small></div></div>
+          <button className="help-link" onClick={() => onNavigate("evidence")}><CircleHelp size={16} /> Methodology & help</button>
           <div className="sidebar-footer"><Leaf size={14} /> NASA Space Apps Challenge 2026</div>
         </div>
       )}
