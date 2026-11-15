@@ -79,7 +79,8 @@ function App() {
         </header>
         <main className="page-content">
           <Suspense fallback={<div className="loading-state" role="status">Preparing analysis view…</div>}>
-            {demo ? <DemoWorkspace screen={activeScreen} /> : <ScienceWorkspace screen={activeScreen} />}
+            <ScienceWorkspace screen={activeScreen} active={!demo} />
+            {demo && <DemoWorkspace screen={activeScreen} />}
           </Suspense>
           <footer className="page-footer"><span>HINGE · LAND SYSTEMS DECISION SUPPORT</span><span>{demo ? 'SYNTHETIC DEMO' : 'ARCHIVED SCIENTIFIC ANALYSIS'}</span></footer>
         </main>

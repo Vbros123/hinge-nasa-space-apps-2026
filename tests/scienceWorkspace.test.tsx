@@ -51,6 +51,12 @@ describe('science workspace flows', () => {
     expect(await screen.findByRole('row', { name: /^1986 68.57/ })).toBeTruthy()
     fireEvent.click(screen.getByRole('button', { name: 'Next window' }))
     expect((await screen.findAllByRole('row', { name: /^1987 .+/ })).length).toBe(2)
+    view('Rotation comparison')
+    fireEvent.click(screen.getByRole('button', { name: 'Open synthetic demo' }))
+    await screen.findByText('Synthetic fixtures active')
+    fireEvent.click(screen.getByRole('button', { name: 'Open scientific analysis' }))
+    expect((await screen.findByLabelText('Parameter set') as HTMLSelectElement).value).toBe('low_storage')
+    expect((screen.getByLabelText('Historical window') as HTMLSelectElement).value).toBe('historical_1985_1987')
   })
 
   it('shows a failed archive request and recovers without falling back to synthetic data', async () => {
