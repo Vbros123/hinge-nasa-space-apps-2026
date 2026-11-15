@@ -1,0 +1,120 @@
+.crop-intro {
+  position: fixed;
+  inset: 0;
+  z-index: 2000;
+  display: grid;
+  place-items: center;
+  overflow: hidden;
+  isolation: isolate;
+  color: #203e32;
+  background: radial-gradient(ellipse at 50% 35%, #fbf8ee 20%, #eee9db 100%);
+  animation: crop-intro-exit .6s ease-in 3.2s both;
+}
+
+.crop-intro-skip {
+  position: absolute;
+  z-index: 1;
+  top: max(1rem, env(safe-area-inset-top));
+  right: max(1rem, env(safe-area-inset-right));
+  min-height: 44px;
+  padding: .45rem .95rem;
+  border: 1px solid #537161;
+  border-radius: 999px;
+  background: #fbf8ee;
+  color: inherit;
+  font: inherit;
+  font-size: .875rem;
+  cursor: pointer;
+}
+
+.crop-intro-skip:focus-visible {
+  outline: 2px solid #203e32;
+  outline-offset: 4px;
+}
+
+.crop-intro-scene {
+  width: min(92vw, 49rem, 195vh);
+  text-align: center;
+}
+
+.crop-intro-brand {
+  margin: 0 0 clamp(.35rem, 2.4vh, 1.65rem);
+  animation: crop-intro-title .6s cubic-bezier(.2,.7,.2,1) 2.6s both;
+}
+
+.crop-intro-wordmark {
+  font-size: clamp(2.65rem, min(11vw, 16vh), 6.3rem);
+  line-height: 1;
+  font-weight: 750;
+  letter-spacing: .16em;
+  padding-left: .16em;
+}
+
+.crop-intro-subtitle {
+  margin-top: .8rem;
+  font-size: clamp(.58rem, 1.65vw, .78rem);
+  text-transform: uppercase;
+  font-weight: 650;
+  letter-spacing: .31em;
+}
+
+.crop-intro-row {
+  display: block;
+  width: 100%;
+  overflow: visible;
+}
+
+.crop-intro-soil {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: crop-intro-furrow .6s ease-out both;
+}
+
+.crop-intro-plant {
+  animation: crop-intro-growth 1.68s cubic-bezier(.33,.04,.19,1) both;
+  animation-delay: var(--crop-delay, .67s);
+}
+
+.crop-intro-plant-2 { --crop-delay: .79s; }
+.crop-intro-plant-3 { --crop-delay: .69s; }
+.crop-intro-plant-4 { --crop-delay: .87s; }
+.crop-intro-plant-5 { --crop-delay: .74s; }
+.crop-intro-plant-6 { --crop-delay: .91s; }
+.crop-intro-plant-7 { --crop-delay: .83s; }
+
+.crop-intro-leaf {
+  transform-box: fill-box;
+  transform-origin: center bottom;
+  animation: crop-intro-unfold .9s ease-out 1.4s both;
+}
+
+@keyframes crop-intro-furrow {
+  from { opacity: 0; transform: scaleX(.68); }
+  to { opacity: 1; transform: scaleX(1); }
+}
+
+@keyframes crop-intro-growth {
+  0% { opacity: 0; transform: scale(.35, 0); }
+  20% { opacity: 1; transform: scale(.48, .24); }
+  75% { opacity: 1; transform: scale(.93, .91); }
+  100% { opacity: 1; transform: scale(1); }
+}
+
+@keyframes crop-intro-unfold {
+  from { opacity: 0; transform: scale(.25, .72); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+@keyframes crop-intro-title {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes crop-intro-exit {
+  from { opacity: 1; }
+  to { opacity: 0; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .crop-intro { display: none; }
+}

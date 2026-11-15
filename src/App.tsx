@@ -1,4 +1,5 @@
-import { lazy, Suspense, useEffect, useMemo, useState } from 'react'
+import { lazy, Suspense, useEffect, useMemo, useRef, useState } from 'react'
+import { CropGrowthIntro, IntroBoundary } from './components/CropGrowthIntro'
 import { MobileNav, Sidebar, type ScreenId } from './components/Sidebar'
 import { useFarmData } from './hooks/useFarmData'
 import { defaultDecisionInputs, scoreRotations } from './services/decisionModel'
@@ -49,6 +50,7 @@ function DemoWorkspace({ screen: activeScreen }: { screen: ScreenId }) {
 }
 
 function App() {
+  const dashboard = useRef<HTMLElement>(null)
   const [activeScreen, setActiveScreen] = useState<ScreenId>('farm')
   const [demo, setDemo] = useState(false)
   const [sidebarCollapsed, setSidebarCollapsed] = useState(false)
@@ -69,6 +71,9 @@ function App() {
 
   return (
     <div className={`app-shell ${sidebarCollapsed ? 'shell-collapsed' : ''}`}>
+      <IntroBoundary>
+        <CropGrowthIntro dashboard={dashboard} />
+      </IntroBoundary>
       <Sidebar demo={demo} active={activeScreen} onNavigate={navigate} collapsed={sidebarCollapsed} onToggle={() => setSidebarCollapsed((value) => !value)} />
       <div className="app-main">
         <header className="topbar">
@@ -77,7 +82,7 @@ function App() {
             {demo ? 'Open scientific analysis' : 'Open synthetic demo'}
           </button>
         </header>
-        <main className="page-content">
+        <main ref={dashboard} tabIndex={-1} className="page-content">
           <Suspense fallback={<div className="loading-state" role="status">Preparing analysis view…</div>}>
             <ScienceWorkspace screen={activeScreen} active={!demo} />
             {demo && <DemoWorkspace screen={activeScreen} />}
