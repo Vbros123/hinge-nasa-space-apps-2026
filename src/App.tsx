@@ -28,9 +28,12 @@ function App() {
   const [sidebarCollapsed, setSidebarCollapsed] = useState(false)
   const { dashboard, history, loading, error } = useFarmData(selectedFarmId)
   const baselineRainMm = dashboard?.climate.reduce((sum, month) => sum + month.precipitationMm, 0) ?? 281
+  const baselineRainWindowMonths = dashboard
+    ? new Set(dashboard.climate.map((observation) => observation.date.slice(0, 7))).size || 6
+    : 6
   const comparison = useMemo(
-    () => dashboard ? scoreRotations(dashboard.rotations, inputs, baselineRainMm) : null,
-    [dashboard, inputs, baselineRainMm],
+    () => dashboard ? scoreRotations(dashboard.rotations, inputs, baselineRainMm, baselineRainWindowMonths) : null,
+    [dashboard, inputs, baselineRainMm, baselineRainWindowMonths],
   )
 
   useEffect(() => {
@@ -62,7 +65,7 @@ function App() {
             <Suspense fallback={<div className="loading-state"><div className="loading-spinner" /> Preparing analysis view…</div>}>
               {activeScreen === 'farm' && <FarmPage dashboard={dashboard} comparison={comparison} onFarmChange={setSelectedFarmId} />}
               {activeScreen === 'compare' && <ComparePage dashboard={dashboard} comparison={comparison} />}
-              {activeScreen === 'boundary' && <BoundaryPage rotations={dashboard.rotations} inputs={inputs} comparison={comparison} baselineRainMm={baselineRainMm} onChange={setInputs} />}
+              {activeScreen === 'boundary' && <BoundaryPage rotations={dashboard.rotations} inputs={inputs} comparison={comparison} baselineRainMm={baselineRainMm} baselineRainWindowMonths={baselineRainWindowMonths} onChange={setInputs} />}
               {activeScreen === 'history' && <HistoryPage scenarios={history} />}
               {activeScreen === 'evidence' && <EvidencePage evidence={dashboard.evidence} decisionState={comparison.decisionState} />}
             </Suspense>

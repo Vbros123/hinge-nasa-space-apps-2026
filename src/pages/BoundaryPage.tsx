@@ -49,23 +49,31 @@ export function BoundaryPage({
   inputs,
   comparison,
   baselineRainMm,
+  baselineRainWindowMonths = 6,
   onChange,
 }: {
   rotations: CropRotation[]
   inputs: DecisionInputs
   comparison: RotationComparison
   baselineRainMm: number
+  baselineRainWindowMonths?: number
   onChange: (next: DecisionInputs) => void
 }) {
-  const boundary = useMemo(() => buildDecisionBoundary(rotations, inputs, baselineRainMm), [rotations, inputs, baselineRainMm])
+  const boundary = useMemo(
+    () => buildDecisionBoundary(rotations, inputs, baselineRainMm, baselineRainWindowMonths),
+    [rotations, inputs, baselineRainMm, baselineRainWindowMonths],
+  )
   const chartData = boundary.points.map((point) => ({
     precipitation: point.precipitationShiftPercent,
     ...point.scores,
   }))
   const activeRotation = rotations.find((rotation) => rotation.id === comparison.preferredRotationId)
-  const transitionText = boundary.transitionDetails.length
-    ? `A modeled ${boundary.transitionDetails[0].reason} transition appears near ${boundary.transitionDetails[0].range[0]}% to ${boundary.transitionDetails[0].range[1]}% precipitation shift.`
-    : 'No ranking transition appears across the current precipitation range.'
+  const firstTransition = boundary.transitionDetails[0]
+  const transitionFrom = rotations.find((rotation) => rotation.id === firstTransition?.fromRotationId)?.name
+  const transitionTo = rotations.find((rotation) => rotation.id === firstTransition?.toRotationId)?.name
+  const transitionText = firstTransition
+    ? `A ${firstTransition.reason === 'constraint' ? 'feasibility' : 'score'} boundary near ${firstTransition.range[0].toFixed(1)}%–${firstTransition.range[1].toFixed(1)}%: ${transitionFrom ?? 'No feasible option'} → ${transitionTo ?? 'No feasible option'}${firstTransition.fromRotationId === firstTransition.toRotationId ? ` (${firstTransition.fromDecisionState} → ${firstTransition.toDecisionState})` : ''}.`
+    : 'No ranking or feasibility transition appears across the current precipitation range.'
   const stateText = comparison.decisionState === 'supported'
     ? 'One option leads clearly within this scenario.'
     : comparison.decisionState === 'sensitive'
@@ -83,7 +91,7 @@ export function BoundaryPage({
       <div className="boundary-layout">
         <Card className="assumptions-panel">
           <div className="card-heading"><div><Eyebrow>SCENARIO CONTROLS</Eyebrow><h2>Adjust your assumptions</h2><p>Move a slider; the model updates immediately.</p></div><button className="icon-button" aria-label="Reset controls" title="Reset to defaults" onClick={() => onChange({ precipitationShiftPercent: 0, irrigationCapMm: 100, waterPriority: 65, soilPriority: 55, heatStressTolerance: 68, soilWorkability: 62, riskTolerance: 58, plantingWindowStartDay: 90, plantingWindowEndDay: 180, coverCropTerminationDay: 145, rotationPlanningHorizonMonths: 12, sequenceCompatibility: 62 })}><RotateCcw size={15} /></button></div>
-          <div className="preset-row"><span>Quick scenario</span><button onClick={() => onChange({ ...inputs, precipitationShiftPercent: -25, irrigationCapMm: 70, waterPriority: 100, soilPriority: 0, heatStressTolerance: 20, soilWorkability: 25, riskTolerance: 15 })}>Dry year</button><button onClick={() => onChange({ ...inputs, precipitationShiftPercent: 0, irrigationCapMm: 100, waterPriority: 65, soilPriority: 55, heatStressTolerance: 68, soilWorkability: 62, riskTolerance: 58, plantingWindowStartDay: 90, plantingWindowEndDay: 180, coverCropTerminationDay: 145, rotationPlanningHorizonMonths: 12, sequenceCompatibility: 58 })}>Baseline</button><button onClick={() => onChange({ ...inputs, precipitationShiftPercent: 25, irrigationCapMm: 160, waterPriority: 75, soilPriority: 80, heatStressTolerance: 78, soilWorkability: 72, riskTolerance: 72, plantingWindowStartDay: 100, plantingWindowEndDay: 190, coverCropTerminationDay: 155, rotationPlanningHorizonMonths: 12, sequenceCompatibility: 72 })}>Wetter year</button></div>
+          <div className="preset-row"><span>Quick scenario</span><button onClick={() => onChange({ ...inputs, precipitationShiftPercent: -40, irrigationCapMm: 0, waterPriority: 100, soilPriority: 0, heatStressTolerance: 20, soilWorkability: 25, riskTolerance: 15 })}>Dry year</button><button onClick={() => onChange({ ...inputs, precipitationShiftPercent: 0, irrigationCapMm: 100, waterPriority: 65, soilPriority: 55, heatStressTolerance: 68, soilWorkability: 62, riskTolerance: 58, plantingWindowStartDay: 90, plantingWindowEndDay: 180, coverCropTerminationDay: 145, rotationPlanningHorizonMonths: 12, sequenceCompatibility: 58 })}>Baseline</button><button onClick={() => onChange({ ...inputs, precipitationShiftPercent: 25, irrigationCapMm: 160, waterPriority: 75, soilPriority: 80, heatStressTolerance: 78, soilWorkability: 72, riskTolerance: 72, plantingWindowStartDay: 100, plantingWindowEndDay: 190, coverCropTerminationDay: 155, rotationPlanningHorizonMonths: 12, sequenceCompatibility: 72 })}>Wetter year</button></div>
           <div className="controls-list">
             <RangeControl label="Precipitation shift" value={inputs.precipitationShiftPercent} min={-40} max={40} step={1} unit="%" help="Relative change from illustrative baseline" tone="blue" onChange={(value) => update('precipitationShiftPercent', value)} />
             <RangeControl label="Irrigation availability" value={inputs.irrigationCapMm} min={0} max={220} step={5} unit=" mm" help="Seasonal water available to the rotation" tone="amber" onChange={(value) => update('irrigationCapMm', value)} />
@@ -121,11 +129,11 @@ export function BoundaryPage({
           </Card>
           <Card className="current-decision-card">
             <div className="current-decision-head"><div><Eyebrow>UNDER YOUR INPUTS</Eyebrow><h2>Current modeled preference</h2></div><span className={`decision-state state-${comparison.decisionState}`} title={comparison.decisionState === 'supported' ? 'Modeled preference' : comparison.decisionState === 'sensitive' ? 'Sensitive' : comparison.decisionState === 'no-feasible' ? 'No feasible rotation' : 'Insufficient evidence'}>{comparison.decisionState === 'supported' ? 'SUPPORTED*' : comparison.decisionState === 'sensitive' ? 'SENSITIVE' : comparison.decisionState === 'no-feasible' ? 'NO FEASIBLE ROTATION' : 'INSUFFICIENT'}</span></div>
-            <div className="decision-leader"><span className="decision-leader-dot" style={{ background: activeRotation?.color }} /><div><strong>{activeRotation?.name ?? 'No leading option'}</strong><small>{stateText}</small></div><b>{comparison.results[0]?.totalScore ?? '—'}<small> pts</small></b></div>
+            <div className="decision-leader"><span className="decision-leader-dot" style={{ background: activeRotation?.color }} /><div><strong>{activeRotation?.name ?? 'No leading option'}</strong><small>{stateText}</small></div><b>{comparison.results.find((result) => result.rotationId === comparison.preferredRotationId)?.totalScore ?? '—'}<small> pts</small></b></div>
             <p className="decision-explanation">{comparison.explanation}</p>
             <div className="ranked-list">{comparison.results.map((result, index) => {
               const rotation = rotations.find((item) => item.id === result.rotationId)
-              return <div key={result.rotationId} className="rank-row"><span className="rank-num">0{index + 1}</span><span className="rank-name"><i style={{ background: rotation?.color }} />{rotation?.name}</span><span className="rank-score">{result.totalScore}</span><span className="rank-track"><i style={{ width: `${result.totalScore}%`, background: rotation?.color }} /></span></div>
+              return <div key={result.rotationId} className={`rank-row ${result.eligible ? '' : 'rank-row-excluded'}`}><span className="rank-num">0{index + 1}</span><span className="rank-name"><i style={{ background: rotation?.color }} />{rotation?.name}<small>{result.eligible ? result.feasibilityStatus : 'excluded · hard constraint'}</small></span><span className="rank-score">{result.totalScore}</span><span className="rank-track"><i style={{ width: `${result.totalScore}%`, background: rotation?.color }} /></span></div>
             })}</div>
             <div className="footnote">* “Supported” describes only the synthetic scoring scenario. It does not imply a real-world recommendation.</div>
           </Card>

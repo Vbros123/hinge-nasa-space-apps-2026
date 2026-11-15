@@ -32,7 +32,7 @@ export function FarmPage({
       ? Math.round((dashboard.vegetation[index].ndvi ?? 0) * 100)
       : null,
   })), [dashboard])
-  const top = comparison.results[0]
+  const top = comparison.results.find((result) => result.rotationId === comparison.preferredRotationId)
   const topRotation = dashboard.rotations.find((rotation) => rotation.id === top?.rotationId)
   const seasonalRainfall = dashboard.climate.reduce((sum, month) => sum + month.precipitationMm, 0)
   const meanTemperature = dashboard.climate.reduce((sum, month) => sum + month.temperatureC, 0) / dashboard.climate.length
@@ -57,7 +57,7 @@ export function FarmPage({
         <MetricCard label="Seasonal rainfall" value={String(seasonalRainfall)} unit="mm" trend={<><ArrowDownRight size={13} /> synthetic</>} icon={<Droplets size={18} />} tone="blue" />
         <MetricCard label="Mean temperature" value={meanTemperature.toFixed(1)} unit="°C" trend={<><ArrowUpRight size={13} /> synthetic</>} icon={<ThermometerSun size={18} />} tone="amber" />
         <MetricCard label="Soil water capacity" value={String(dashboard.soil.availableWaterCapacityMmPerM)} unit="mm/m" trend="Silt loam profile" icon={<Sprout size={18} />} tone="green" />
-        <MetricCard label="Rotation leader" value={topRotation?.name.split(' · ')[0] ?? '—'} unit="" trend={`${top?.totalScore ?? '—'} modeled points`} icon={<Sun size={18} />} tone="slate" />
+        <MetricCard label="Rotation leader" value={topRotation?.name.split(' · ')[0] ?? '—'} unit="" trend={top ? `${top.totalScore} modeled points` : 'No eligible option'} icon={<Sun size={18} />} tone="slate" />
       </div>
       <div className="farm-grid">
         <Card className="map-card">
@@ -100,7 +100,7 @@ export function FarmPage({
         </Card>
         <Card className="insight-card">
           <div className="insight-icon"><Sun size={18} /></div><Eyebrow>MODEL READOUT</Eyebrow>
-          <h2>{topRotation?.name ?? 'Rotation'} currently leads</h2>
+          <h2>{topRotation?.name ?? (comparison.decisionState === 'no-feasible' ? 'No feasible rotation' : 'No supported leader')}</h2>
           <p>{comparison.explanation} This is a relative demonstration score, not a crop-yield prediction.</p>
           <div className="insight-score"><span>Current modeled score</span><strong>{top?.totalScore ?? '—'}<small> / 100</small></strong></div>
           <button className="text-button" onClick={() => document.dispatchEvent(new CustomEvent('hinge:navigate', { detail: 'boundary' }))}>Explore what changes the ranking <span>→</span></button>

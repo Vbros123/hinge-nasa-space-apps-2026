@@ -1,6 +1,7 @@
 import type {
   CropRotation,
   DecisionBoundary,
+  DecisionBoundaryPoint,
   DecisionInputs,
   DecisionState,
   RotationComparison,
@@ -9,6 +10,9 @@ import type {
 import { evaluateRotationFeasibility } from './feasibilityEngine'
 
 const clamp = (value: number, min = 0, max = 100) => Math.min(max, Math.max(min, value))
+const DEFAULT_RAIN_WINDOW_MONTHS = 6
+const BOUNDARY_STEP_PERCENT = 1
+const BOUNDARY_PRECISION_PERCENT = 0.1
 
 export const defaultDecisionInputs: DecisionInputs = {
   precipitationShiftPercent: 0,
@@ -57,8 +61,12 @@ export function calculateDynamicFeasibility(
   const heatPenalty = (100 - safeInputs.heatStressTolerance) * 0.18 * (1 - rotation.climateResilience / 100)
   const soilPenalty = (100 - safeInputs.soilWorkability) * 0.22 * (1 - rotation.soilImpact / 100)
   const riskPenalty = (100 - safeInputs.riskTolerance) * 0.18 * (1 - rotation.confidence)
+  const dryClimatePenalty = Math.max(0, -safeInputs.precipitationShiftPercent) / 100
+    * (100 - rotation.climateResilience) * 0.8
   const flexibleBonus = (safeInputs.riskTolerance - 50) * 0.14
-  const dynamicFeasibility = clamp(rotation.feasibility - waterPenalty - heatPenalty - soilPenalty - riskPenalty + flexibleBonus)
+  const dynamicFeasibility = clamp(
+    rotation.feasibility - waterPenalty - heatPenalty - soilPenalty - riskPenalty - dryClimatePenalty + flexibleBonus,
+  )
 
   return {
     dynamicFeasibility,
@@ -70,11 +78,21 @@ export function scoreRotations(
   rotations: CropRotation[],
   inputs: Partial<DecisionInputs> | DecisionInputs,
   baselineRainMm = 281,
+  baselineRainWindowMonths = DEFAULT_RAIN_WINDOW_MONTHS,
 ): RotationComparison {
+  if (!Number.isFinite(baselineRainMm) || baselineRainMm < 0) {
+    throw new RangeError('Baseline precipitation must be a finite, non-negative value.')
+  }
+  if (!Number.isFinite(baselineRainWindowMonths) || baselineRainWindowMonths <= 0) {
+    throw new RangeError('The baseline precipitation window must be a positive number of months.')
+  }
+
   const safeInputs = normalizeInputs(inputs)
-  const planningFactor = safeInputs.rotationPlanningHorizonMonths / 12
-  const adjustedRain = baselineRainMm * planningFactor * (1 + safeInputs.precipitationShiftPercent / 100)
-  const effectiveWaterMm = adjustedRain + safeInputs.irrigationCapMm
+  const planningMonths = safeInputs.rotationPlanningHorizonMonths
+  const planningFactor = planningMonths / 12
+  const rainfallMultiplier = Math.max(0, 1 + safeInputs.precipitationShiftPercent / 100)
+  const seasonalPrecipitationMm = baselineRainMm / baselineRainWindowMonths * planningMonths * rainfallMultiplier
+  const effectiveWaterMm = seasonalPrecipitationMm + Math.max(0, safeInputs.irrigationCapMm)
   const feasibilityWeight = 20 + (safeInputs.riskTolerance / 100) * 12
   const environmentWeight = 14 + (100 - safeInputs.heatStressTolerance) / 100 * 12
   const totalWeight = safeInputs.waterPriority + safeInputs.soilPriority + feasibilityWeight + environmentWeight
@@ -82,80 +100,80 @@ export function scoreRotations(
   const results: SimulationOutput[] = rotations.map((rotation) => {
     const seasonalDemandMm = rotation.annualWaterNeedMm * planningFactor
     const waterDeficitMm = Math.max(0, seasonalDemandMm - effectiveWaterMm)
-    const safeSeasonalDemand = Math.max(seasonalDemandMm, 1)
-    const waterFit = clamp(100 - (waterDeficitMm / safeSeasonalDemand) * 112)
+    const waterFit = clamp(100 - (waterDeficitMm / Math.max(seasonalDemandMm, 1)) * 112)
     const modeledSoilWater = buildModeledSoilWater(rotation, safeInputs, safeInputs.precipitationShiftPercent)
     const resilience = clamp(rotation.climateResilience + safeInputs.precipitationShiftPercent * 0.18)
     const feasibilityAssessment = evaluateRotationFeasibility(rotation, safeInputs, effectiveWaterMm)
     const { dynamicFeasibility, feasibilityPenalty } = calculateDynamicFeasibility(rotation, effectiveWaterMm, safeInputs)
-    const penaltyAdjustment = feasibilityAssessment.status === 'infeasible' ? 38 : feasibilityAssessment.status === 'constrained' ? 12 : 0
+    const displayedWaterFit = Math.round(waterFit * 10) / 10
+    const displayedSoilWater = Math.round(modeledSoilWater * 10) / 10
+    const displayedDynamicFeasibility = Math.round(dynamicFeasibility * 10) / 10
     const totalScore = clamp(
       (
-        waterFit * safeInputs.waterPriority
-        + modeledSoilWater * safeInputs.soilPriority
-        + dynamicFeasibility * feasibilityWeight
+        displayedWaterFit * safeInputs.waterPriority
+        + displayedSoilWater * safeInputs.soilPriority
+        + displayedDynamicFeasibility * feasibilityWeight
         + rotation.environmentalScore * environmentWeight
-      ) / totalWeight - penaltyAdjustment,
+      ) / totalWeight,
     )
 
     return {
       rotationId: rotation.id,
-      effectiveWaterMm: Math.round(effectiveWaterMm),
-      waterFit: Math.round(waterFit),
-      modeledSoilWater: Math.round(modeledSoilWater),
-      climateResilience: Math.round(resilience),
+      seasonalPrecipitationMm: Math.round(seasonalPrecipitationMm * 10) / 10,
+      seasonalDemandMm: Math.round(seasonalDemandMm * 10) / 10,
+      effectiveWaterMm: Math.round(effectiveWaterMm * 10) / 10,
+      waterFit: displayedWaterFit,
+      modeledSoilWater: displayedSoilWater,
+      climateResilience: Math.round(resilience * 10) / 10,
       agronomicFeasibility: rotation.feasibility,
-      dynamicFeasibility: Math.round(dynamicFeasibility * 10) / 10,
+      dynamicFeasibility: displayedDynamicFeasibility,
       feasibilityPenalty: Math.round(feasibilityPenalty * 10) / 10,
       environmentalScore: rotation.environmentalScore,
       confidence: rotation.confidence,
       totalScore: Math.round(totalScore * 10) / 10,
-      waterDeficitMm: Math.round(waterDeficitMm),
+      waterDeficitMm: Math.round(waterDeficitMm * 10) / 10,
       eligible: feasibilityAssessment.eligible,
       feasibilityStatus: feasibilityAssessment.status,
     }
   })
 
-  const compareScores = (left: SimulationOutput, right: SimulationOutput) => {
-    const scoreDelta = right.totalScore - left.totalScore
-    if (Math.abs(scoreDelta) > 1.5) return scoreDelta
-    if (safeInputs.waterPriority >= 70) return (right.waterFit + right.dynamicFeasibility) - (left.waterFit + left.dynamicFeasibility)
-    return right.agronomicFeasibility - left.agronomicFeasibility
-  }
-
-  const eligibleResults = results.filter((result) => result.eligible)
-  const orderedResults = [...results].sort(compareScores)
-  const orderedEligibleResults = [...eligibleResults].sort(compareScores)
-  const leader = orderedEligibleResults[0] ?? orderedResults[0]
-  const runnerUp = orderedEligibleResults[1] ?? orderedResults[1]
-  const scoreGap = leader && runnerUp ? Math.round(Math.abs(leader.totalScore - runnerUp.totalScore) * 10) / 10 : 0
+  const compareScores = (left: SimulationOutput, right: SimulationOutput) =>
+    right.totalScore - left.totalScore || left.rotationId.localeCompare(right.rotationId)
+  const orderedEligibleResults = results.filter((result) => result.eligible).sort(compareScores)
+  const orderedIneligibleResults = results.filter((result) => !result.eligible).sort(compareScores)
+  const orderedResults = [...orderedEligibleResults, ...orderedIneligibleResults]
+  const leader = orderedEligibleResults[0]
+  const runnerUp = orderedEligibleResults[1]
+  const scoreGap = leader && runnerUp ? Math.round((leader.totalScore - runnerUp.totalScore) * 10) / 10 : 0
   const confidence = leader?.confidence ?? 0
   const supportBoundary = Math.max(0.42, 0.56 - (safeInputs.riskTolerance - 50) * 0.002)
   const sensitiveGap = Math.max(0.7, 1.2 - (safeInputs.riskTolerance - 50) * 0.01)
-  const waterStressScenario = safeInputs.precipitationShiftPercent <= -15 && safeInputs.irrigationCapMm <= 80 && safeInputs.waterPriority >= 75
-  const weakPreferenceSignal = waterStressScenario && scoreGap < 3 && confidence < 0.7
 
   let decisionState: DecisionState = 'supported'
   if (orderedEligibleResults.length === 0) {
     decisionState = 'no-feasible'
-  } else if (confidence < 0.42 || leader.dynamicFeasibility < 40 || weakPreferenceSignal) {
+  } else if (orderedEligibleResults.length < 2 || confidence < 0.42 || (leader?.dynamicFeasibility ?? 0) < 40) {
     decisionState = 'insufficient'
   } else if (confidence < supportBoundary || scoreGap < sensitiveGap) {
     decisionState = 'sensitive'
   }
 
+  const leaderName = rotations.find((rotation) => rotation.id === leader?.rotationId)?.name ?? 'The leading rotation'
+  const runnerUpName = rotations.find((rotation) => rotation.id === runnerUp?.rotationId)?.name ?? 'the next option'
   const explanation = decisionState === 'no-feasible'
-    ? 'No feasible rotation remains after applying the hard agricultural constraints.'
+    ? 'No rotation remains eligible after applying the hard agricultural constraints.'
     : decisionState === 'supported'
-      ? `${rotations.find((rotation) => rotation.id === leader?.rotationId)?.name ?? 'The leading rotation'} leads by ${scoreGap} modeled points under these inputs.`
+      ? `${leaderName} leads by ${scoreGap} modeled points under these inputs.`
       : decisionState === 'insufficient'
-        ? 'The model cannot justify a supported preference because the ranking is too sensitive to water availability and assumption changes.'
-        : `${rotations.find((rotation) => rotation.id === leader?.rotationId)?.name ?? 'The current leader'} is only ${scoreGap} points ahead of ${rotations.find((rotation) => rotation.id === runnerUp?.rotationId)?.name ?? 'the next option'}; small assumption changes may reverse the order.`
+        ? orderedEligibleResults.length < 2
+          ? 'Only one rotation remains eligible, so the comparison does not establish a supported preference.'
+          : 'The model cannot justify a supported preference because the evidence or feasibility signal is too weak.'
+        : `${leaderName} is only ${scoreGap} points ahead of ${runnerUpName}; small assumption changes may reverse the order.`
 
   return {
     inputs: safeInputs,
     results: orderedResults,
-    preferredRotationId: orderedEligibleResults[0]?.rotationId ?? '',
+    preferredRotationId: leader?.rotationId ?? null,
     decisionState,
     scoreGap,
     explanation,
@@ -167,63 +185,88 @@ export function scoreRotations(
       limitingFactors: [
         'Synthetic climate, soil, and rotation fixtures',
         'Model-derived confidence score only',
-        'Agricultural constraints handled separately from score weights',
+        'Hard agricultural constraints exclude ineligible rotations from preference ranking',
       ],
     },
   }
+}
+
+function toBoundaryPoint(precipitationShiftPercent: number, comparison: RotationComparison): DecisionBoundaryPoint {
+  return {
+    precipitationShiftPercent,
+    scores: Object.fromEntries(comparison.results.map((item) => [item.rotationId, item.totalScore])),
+    preferredRotationId: comparison.preferredRotationId,
+    decisionState: comparison.decisionState,
+    eligibleRotationIds: comparison.results.filter((item) => item.eligible).map((item) => item.rotationId).sort(),
+  }
+}
+
+function sameBoundaryState(left: DecisionBoundaryPoint, right: DecisionBoundaryPoint): boolean {
+  return left.preferredRotationId === right.preferredRotationId
+    && left.decisionState === right.decisionState
+    && left.eligibleRotationIds.join('|') === right.eligibleRotationIds.join('|')
 }
 
 export function buildDecisionBoundary(
   rotations: CropRotation[],
   inputs: Partial<DecisionInputs> | DecisionInputs,
   baselineRainMm = 281,
+  baselineRainWindowMonths = DEFAULT_RAIN_WINDOW_MONTHS,
 ): DecisionBoundary {
   const safeInputs = normalizeInputs(inputs)
-  const sampleValues = Array.from({ length: 17 }, (_, index) => -40 + index * 5)
-  const points = sampleValues.map((precipitationShiftPercent) => {
-    const comparison = scoreRotations(rotations, { ...safeInputs, precipitationShiftPercent }, baselineRainMm)
-    return {
-      precipitationShiftPercent,
-      scores: Object.fromEntries(comparison.results.map((item) => [item.rotationId, item.totalScore])),
-      preferredRotationId: comparison.preferredRotationId,
-    }
-  })
+  const sampleCount = Math.round((80 / BOUNDARY_STEP_PERCENT)) + 1
+  const sampleValues = Array.from({ length: sampleCount }, (_, index) => -40 + index * BOUNDARY_STEP_PERCENT)
+  const compareAt = (precipitationShiftPercent: number) => scoreRotations(
+    rotations,
+    { ...safeInputs, precipitationShiftPercent },
+    baselineRainMm,
+    baselineRainWindowMonths,
+  )
+  const points = sampleValues.map((value) => toBoundaryPoint(value, compareAt(value)))
 
   const transitionDetails = points.slice(1).flatMap((point, index) => {
     const previous = points[index]
-    if (previous.preferredRotationId === point.preferredRotationId) return []
-    const left = previous.precipitationShiftPercent
-    const right = point.precipitationShiftPercent
-    const leftComparison = scoreRotations(rotations, { ...safeInputs, precipitationShiftPercent: left }, baselineRainMm)
-    const rightComparison = scoreRotations(rotations, { ...safeInputs, precipitationShiftPercent: right }, baselineRainMm)
-    const reason = leftComparison.decisionState === 'no-feasible' || rightComparison.decisionState === 'no-feasible' ? 'constraint' : 'score'
+    if (sameBoundaryState(previous, point)) return []
+
+    let left = previous.precipitationShiftPercent
+    let right = point.precipitationShiftPercent
+    const fromState = previous
+    while (right - left > BOUNDARY_PRECISION_PERCENT) {
+      const midpoint = (left + right) / 2
+      const midpointPoint = toBoundaryPoint(midpoint, compareAt(midpoint))
+      if (sameBoundaryState(fromState, midpointPoint)) left = midpoint
+      else right = midpoint
+    }
+
+    const before = toBoundaryPoint(left, compareAt(left))
+    const after = toBoundaryPoint(right, compareAt(right))
+    const beforeIds = new Set(before.eligibleRotationIds)
+    const afterIds = new Set(after.eligibleRotationIds)
+    const addedEligibleRotationIds = after.eligibleRotationIds.filter((id) => !beforeIds.has(id))
+    const removedEligibleRotationIds = before.eligibleRotationIds.filter((id) => !afterIds.has(id))
+    const constraintChanged = addedEligibleRotationIds.length > 0
+      || removedEligibleRotationIds.length > 0
+      || before.decisionState === 'no-feasible'
+      || after.decisionState === 'no-feasible'
     const range: [number, number] = [left, right]
-    const normalizedReason: 'score' | 'constraint' = reason === 'constraint' ? 'constraint' : 'score'
+
     return [{
       precipitationShiftPercent: right,
-      fromRotationId: previous.preferredRotationId,
-      toRotationId: point.preferredRotationId,
+      fromRotationId: before.preferredRotationId,
+      toRotationId: after.preferredRotationId,
       range,
-      reason: normalizedReason,
+      reason: constraintChanged ? 'constraint' as const : 'score' as const,
+      fromDecisionState: before.decisionState,
+      toDecisionState: after.decisionState,
+      addedEligibleRotationIds,
+      removedEligibleRotationIds,
     }]
   })
-
-  const transitions = points.slice(1).flatMap((point, index) =>
-    point.preferredRotationId !== points[index].preferredRotationId
-      ? [point.precipitationShiftPercent]
-      : [],
-  )
 
   return {
     points,
     currentInputs: safeInputs,
-    transitions: transitions.length > 0 ? transitions : [0],
-    transitionDetails: transitionDetails.length > 0 ? transitionDetails : [{
-      precipitationShiftPercent: 0,
-      fromRotationId: points[8]?.preferredRotationId ?? '',
-      toRotationId: points[9]?.preferredRotationId ?? '',
-      range: [-5, 0],
-      reason: 'score',
-    }],
+    transitions: transitionDetails.map((transition) => transition.precipitationShiftPercent),
+    transitionDetails,
   }
 }

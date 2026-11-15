@@ -28,7 +28,7 @@ npm run preview
 - **Rotation comparison:** ranked crop rotations, indicator table, score chart, and trade-off radar.
 - **Decision boundary explorer:** responsive scenario controls, explicit agronomic constraint sliders (heat stress tolerance, soil workability, and risk tolerance), quick presets, a live multi-rotation sensitivity plot with decision transitions, score ranking, and a live explanation of the current lead. The same calculation powers the comparison view.
 - **Historical climate replay:** interactive year timeline, year-to-year comparison, synthetic climate assumptions, and a separately labeled simulated response index.
-- **Evidence & uncertainty:** provenance register with filtering, explicit unavailable data, and supported / sensitive / insufficient decision states.
+- **Evidence & uncertainty:** provenance register with filtering, explicit unavailable data, and supported / sensitive / insufficient / no-feasible decision states.
 - **Integration seams:** shared TypeScript contracts, an API adapter interface, a mock service, and an opt-in HTTP adapter. Proposed routes are not implemented backend endpoints.
 
 The interface is responsive down to mobile widths and uses accessible labels on navigation and controls. Map tiles require an internet connection and are served by OpenStreetMap; farm coordinates and markers remain synthetic.
@@ -37,7 +37,7 @@ Verification details and tool limitations are recorded in [`docs/VERIFICATION.md
 
 ## Data mode and integrations
 
-By default the app uses `DemoDataService`. The HTTP adapter is selected only when `VITE_HINGE_API_BASE_URL` is set in the environment. The intended response shapes, example payloads, and assumptions are documented in [`docs/API_CONTRACTS.md`](docs/API_CONTRACTS.md).
+By default the app uses `DemoDataService`. The HTTP adapter is selected only when `VITE_HINGE_API_BASE_URL` is set in the environment. The intended response shapes, example payloads, and assumptions are documented in [`docs/API_CONTRACTS.md`](docs/API_CONTRACTS.md) and the Person 4 action checklist in [`docs/PERSON4_INTEGRATION_HANDOFF.md`](docs/PERSON4_INTEGRATION_HANDOFF.md).
 
 ```bash
 cp .env.example .env.local
@@ -48,9 +48,9 @@ There is no guarantee that a compatible API exists at any URL. The current propo
 
 ## Model and interpretation
 
-The client-side demonstration formula is in `src/services/decisionModel.ts`. It derives a water-fit score from effective water supply and rotation water demand, combines it with modeled soil-water conditions, and adds fixed feasibility and environmental indicators using the two user-set preference weights. The baseline water supply uses the currently selected farm's synthetic seasonal precipitation, and the chart recomputes the same model over precipitation shifts from −40% to +40%.
+The client-side demonstration formula is in `src/services/decisionModel.ts`. It scales the precipitation total and annual crop demand to the same selected planning window, then calculates one weighted score used by both displayed sorting and the preferred rotation. `src/services/feasibilityEngine.ts` excludes rotations that violate hard planting-window, cover-crop deadline, horizon, sequence, or severe water-coverage constraints. The boundary samples score, eligibility, and decision-state changes and refines each transition interval.
 
-The supported / sensitive / insufficient states are illustrative confidence gates (currently 0.6 synthetic confidence and a 2-point score gap for a supported preference; confidence below 0.4 is insufficient). They indicate only how this mock comparison behaves, not scientific confidence. Rotation scores are relative and must not be interpreted as yields, measured water balances, or recommendations. Read the assumptions before adapting the formula.
+The water-window scaling, 88% minimum water-coverage threshold, constraint rules, confidence gates, and decision states are provisional synthetic assumptions, not scientific confidence or validated agronomic thresholds. Rotation scores are relative and must not be interpreted as yields, measured water balances, or recommendations. Read the assumptions before adapting the formula.
 
 ## Repository layout
 

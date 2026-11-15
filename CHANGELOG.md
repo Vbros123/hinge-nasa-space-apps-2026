@@ -1,5 +1,19 @@
 # Changelog
 
+## 2026-11-14 — final remediation
+
+- `src/services/decisionModel.ts` — normalized precipitation and crop demand to the same planning window; included precipitation-driven climate resilience in dynamic feasibility; rounded components before calculating the displayed score; removed hidden score penalties and non-score tie-breaks; ranked eligible options before excluded diagnostics; refined actual score, state, and feasibility boundary transitions to 0.1 percentage-point intervals without fabricated fallback transitions.
+- `src/services/feasibilityEngine.ts` — made non-overlapping planting windows, applicable late cover-crop termination, insufficient planning horizon, low sequence compatibility, and less than 88% seasonal water coverage hard exclusions; retained partial-window and moderate-water deficits as eligible constrained states.
+- `src/types/domain.ts`, `src/fixtures/demo.ts` — added seasonal water result fields, boundary eligibility/state details, and an explicit flag for rotations that require cover-crop termination.
+- `src/App.tsx`, `src/pages/BoundaryPage.tsx`, `src/pages/ComparePage.tsx`, `src/pages/FarmPage.tsx`, `src/App.css` — shared the climate observation window with both score surfaces; displayed seasonal supply/demand and excluded status; clarified live boundary transitions and no-feasible state.
+- `tests/decisionModel.test.ts`, `tests/BoundaryPage.test.tsx` — added regression coverage for same-window water math, exact score formula/rank consistency, hard feasibility exclusions, no fake transitions, refined boundary detection, and the shared explorer baseline.
+- `docs/API_CONTRACTS.md`, `docs/PERSON4_INTEGRATION_HANDOFF.md`, `docs/VERIFICATION.md`, `README.md` — documented the exact demo formulas, provisional constraints, proposed-but-unimplemented routes, provenance requirements, model ownership, Person 4 integration actions, and final verification.
+
+Verification run for this revision:
+- `npm test` — 17 tests passed.
+- `npm run build` — passed.
+- `npm run lint` — passed.
+
 ## 2026-11-14 — decision-model, constraint, and verification updates
 
 ### Final revision

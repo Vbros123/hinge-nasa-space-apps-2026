@@ -59,6 +59,7 @@ export interface CropRotation {
   description: string
   plantingWindowStartDay: number
   plantingWindowEndDay: number
+  requiresCoverCropTermination: boolean
   coverCropTerminationDay: number
   planningHorizonMonths: number
   sequenceCompatibility: number
@@ -91,6 +92,8 @@ export interface RotationFeasibilityAssessment {
 
 export interface SimulationOutput {
   rotationId: string
+  seasonalPrecipitationMm: number
+  seasonalDemandMm: number
   effectiveWaterMm: number
   waterFit: number
   modeledSoilWater: number
@@ -109,7 +112,7 @@ export interface SimulationOutput {
 export interface RotationComparison {
   inputs: DecisionInputs
   results: SimulationOutput[]
-  preferredRotationId: string
+  preferredRotationId: string | null
   decisionState: DecisionState
   scoreGap: number
   explanation: string
@@ -126,16 +129,22 @@ export interface UncertaintyAssessment {
 
 export interface DecisionBoundaryTransition {
   precipitationShiftPercent: number
-  fromRotationId: string
-  toRotationId: string
+  fromRotationId: string | null
+  toRotationId: string | null
   range: [number, number]
   reason: 'score' | 'constraint'
+  fromDecisionState: DecisionState
+  toDecisionState: DecisionState
+  addedEligibleRotationIds: string[]
+  removedEligibleRotationIds: string[]
 }
 
 export interface DecisionBoundaryPoint {
   precipitationShiftPercent: number
   scores: Record<string, number>
-  preferredRotationId: string
+  preferredRotationId: string | null
+  decisionState: DecisionState
+  eligibleRotationIds: string[]
 }
 
 export interface DecisionBoundary {

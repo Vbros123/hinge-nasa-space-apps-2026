@@ -29,13 +29,13 @@ afterEach(cleanup)
 
 function BoundaryHarness() {
   const [inputs, setInputs] = useState<DecisionInputs>(defaultDecisionInputs)
-  const comparison = scoreRotations(demoDashboard.rotations, inputs)
+  const comparison = scoreRotations(demoDashboard.rotations, inputs, 181, 6)
   return (
     <BoundaryPage
       rotations={demoDashboard.rotations}
       inputs={inputs}
       comparison={comparison}
-      baselineRainMm={281}
+      baselineRainMm={181}
       onChange={setInputs}
     />
   )
@@ -47,8 +47,8 @@ describe('Decision Boundary Explorer', () => {
     expect(screen.getByText('SUPPORTED*')).toBeTruthy()
     fireEvent.click(screen.getByRole('button', { name: 'Dry year' }))
     expect(screen.getByText('INSUFFICIENT')).toBeTruthy()
-    expect((screen.getByRole('slider', { name: 'Precipitation shift' }) as HTMLInputElement).value).toBe('-25')
-    expect((screen.getByRole('slider', { name: 'Irrigation availability' }) as HTMLInputElement).value).toBe('70')
+    expect((screen.getByRole('slider', { name: 'Precipitation shift' }) as HTMLInputElement).value).toBe('-40')
+    expect((screen.getByRole('slider', { name: 'Irrigation availability' }) as HTMLInputElement).value).toBe('0')
   })
 })
 

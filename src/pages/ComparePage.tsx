@@ -41,14 +41,15 @@ export function ComparePage({
       <SectionHeading eyebrow="OPTIONS / 02" title="Rotation comparison" description="Compare the trade-offs behind each modeled rotation, using one shared set of assumptions." action={<StatusPill status="modeled" />} />
       <div className="demo-banner"><span className="banner-dot" /><strong>SCENARIO COMPARISON</strong><span>Relative scores are illustrative and do not predict yield or prescribe a crop.</span><StatusPill status="assumed" /></div>
       <div className="comparison-summary">
-        {comparison.results.map((result, index) => {
+        {comparison.results.map((result) => {
           const rotation = dashboard.rotations.find((item) => item.id === result.rotationId)
+          const isPreferred = result.eligible && result.rotationId === comparison.preferredRotationId
           return (
-            <Card key={result.rotationId} className={`rotation-card ${index === 0 ? 'rotation-leader' : ''}`}>
-              <div className="rotation-card-top"><span className="rotation-swatch" style={{ backgroundColor: rotation?.color }} />{index === 0 && <span className="leader-chip"><Check size={12} /> LEADS THIS SCENARIO</span>}</div>
+            <Card key={result.rotationId} className={`rotation-card ${isPreferred ? 'rotation-leader' : ''}`}>
+              <div className="rotation-card-top"><span className="rotation-swatch" style={{ backgroundColor: rotation?.color }} />{isPreferred && <span className="leader-chip"><Check size={12} /> LEADS THIS SCENARIO</span>}{!result.eligible && <span className="leader-chip">EXCLUDED · HARD CONSTRAINT</span>}</div>
               <h2>{rotation?.name}</h2><p>{rotation?.description}</p>
               <div className="rotation-score"><strong>{result.totalScore}</strong><span>modeled points</span></div>
-              <div className="rotation-mini-metrics"><span><Droplets size={14} />{rotation?.annualWaterNeedMm} mm / yr</span><span><Sprout size={14} />{result.modeledSoilWater} soil-water</span></div>
+              <div className="rotation-mini-metrics"><span><Droplets size={14} />{result.seasonalDemandMm} mm need / {result.effectiveWaterMm} mm supply</span><span><Sprout size={14} />{result.modeledSoilWater} soil-water</span></div>
             </Card>
           )
         })}
@@ -94,10 +95,10 @@ export function ComparePage({
         <div className="card-heading"><div><Eyebrow>DECISION DETAIL</Eyebrow><h2>Modeled indicators by rotation</h2><p>Inputs can be adjusted in Decision explorer.</p></div><button className="small-link" onClick={() => document.dispatchEvent(new CustomEvent('hinge:navigate', { detail: 'boundary' }))}>Open explorer <ArrowUpRight size={14} /></button></div>
         <div className="comparison-table-wrap">
           <table className="comparison-table">
-            <thead><tr><th>Rotation</th><th>Water need</th><th>Water fit</th><th>Soil-water</th><th>Feasibility</th><th>Environment</th><th>Confidence</th></tr></thead>
+            <thead><tr><th>Rotation</th><th>Seasonal need / supply</th><th>Water fit</th><th>Soil-water</th><th>Dynamic feasibility</th><th>Eligibility</th><th>Environment</th><th>Confidence</th></tr></thead>
             <tbody>{comparison.results.map((result) => {
               const rotation = dashboard.rotations.find((item) => item.id === result.rotationId)
-              return <tr key={result.rotationId}><td><span className="table-rotation"><i style={{ background: rotation?.color }} />{rotation?.name}</span></td><td>{rotation?.annualWaterNeedMm} mm / yr</td><td><span className="table-score">{result.waterFit}</span></td><td>{result.modeledSoilWater}</td><td>{result.dynamicFeasibility}</td><td>{result.environmentalScore}</td><td><span className="confidence-cell"><span className="confidence-track"><i style={{ width: `${(result.confidence * 100)}%` }} /></span>{Math.round(result.confidence * 100)}%</span></td></tr>
+              return <tr key={result.rotationId}><td><span className="table-rotation"><i style={{ background: rotation?.color }} />{rotation?.name}</span></td><td>{result.seasonalDemandMm} / {result.effectiveWaterMm} mm</td><td><span className="table-score">{result.waterFit}</span></td><td>{result.modeledSoilWater}</td><td>{result.dynamicFeasibility}</td><td>{result.eligible ? result.feasibilityStatus : 'excluded'}</td><td>{result.environmentalScore}</td><td><span className="confidence-cell"><span className="confidence-track"><i style={{ width: `${(result.confidence * 100)}%` }} /></span>{Math.round(result.confidence * 100)}%</span></td></tr>
             })}</tbody>
           </table>
         </div>
