@@ -9,3 +9,5 @@
 | Phase 3 scientific outputs | Modeled outcomes and comparisons for matched historical windows. |
 
 The Evidence screen exposes the source manifest, model manifest and all eight output checksums. The [integration audit](FINAL_INTEGRATION_AUDIT.md) describes checksum verification and joins.
+
+The [recorded scientific manifest](../science-backend/provenance/model_manifest.json) and [output digests](../science-backend/provenance/repro_before.sha256) are versioned with the model source. The [replay guide](../science-backend/README.md) explains access to the cached input bundle.

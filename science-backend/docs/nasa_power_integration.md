@@ -1,0 +1,5 @@
+# NASA POWER weather integration
+
+`run_integrated.py` checks every source hash and every POWER parameter unit/time-standard in `weather_metadata.json`, then adapts `hinge.environment.v2` to the engine's declared units and source-grid site. `engine/compat.py` maps `solar_radiation_mj_m2_day` and `wind_speed_m_s` to canonical names. `normalize_weather` preserves nulls and quality flags, rejects physically invalid entries, and carries `model_ready`. `complete_years` excludes any incomplete, flagged, non-ready, or required-null year. It creates only contiguous, complete three-year windows. Dates are NASA POWER LST calendar labels, not UTC timestamps.
+
+Included: 1984–2025. Excluded: 1981–1983, because solar radiation is absent and flagged. This yields 40 overlapping historical 3-year windows, not 40 independent samples. Source-grid latitude 35.5° and elevation 50.19 m come from POWER response geometry. The elevation is source-reported grid metadata, not a verified field elevation; pressure and clear-sky radiation depend mildly on it. Initial soil water, agronomic calendars, and runoff remain assumptions.

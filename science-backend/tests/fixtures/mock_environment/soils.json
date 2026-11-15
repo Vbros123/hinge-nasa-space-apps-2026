@@ -1,0 +1,8 @@
+{
+  "note": "MOCK soil storage scenarios, not derived from SSURGO",
+  "available_water_storage_mm": {
+    "low": 70,
+    "medium": 105,
+    "high": 140
+  }
+}

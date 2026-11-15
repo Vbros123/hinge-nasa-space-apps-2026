@@ -1,0 +1,7 @@
+.venv/
+__pycache__/
+.pytest_cache/
+/data/real_environment/
+/data/synthetic_test/
+/output/
+/tests/fixtures/mock_environment/weather.*

@@ -1,0 +1,14 @@
+{
+  "provenance": "MOCK_ENVIRONMENT_SYNTHETIC (not NASA POWER / SSURGO)",
+  "units": {
+    "temperature": "degC",
+    "precipitation": "mm",
+    "solar_radiation": "MJ/m2/day",
+    "wind_speed": "m/s",
+    "wind_height_m": 2.0
+  },
+  "site": {
+    "latitude_deg": 35.51,
+    "elevation_m": 50
+  }
+}

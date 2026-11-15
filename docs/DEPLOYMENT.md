@@ -8,25 +8,4 @@ For Vercel, link this repository to a Vite project. Use `npm ci` as the install 
 
 ## Science reproducibility
 
-Use the team’s `HINGE_PERSON2_PHASE3_INTEGRATED.zip` archive with engine, inputs, configurations, tests, and recorded outputs. Raw imagery, Parquet inputs and the Python engine are contained in that archive.
-
-```bash
-unzip HINGE_PERSON2_PHASE3_INTEGRATED.zip
-cd hinge-integrated
-python -m venv .venv
-source .venv/bin/activate
-python -m pip install -r requirements.txt
-python -m pytest -q
-sha256sum -c output/real_environment/repro_before.sha256
-python run_integrated.py --data data/real_environment --out /tmp/hinge-rebuilt
-```
-
-Compare all eight rebuilt files to the archived files. Use the pinned dependency versions recorded in the model manifest for byte-by-byte comparisons. In the frontend repository, activate the same Python environment, then run:
-
-```bash
-python scripts/package_science.py /absolute/path/to/hinge-integrated
-npm test
-npm run build
-```
-
-The packaging command requires the recorded output hashes and verifies model input hashes. For a new scientific release, verify the regenerated results, record the corresponding hashes, and rerun frontend contract and interaction checks. The versioned asset layout is documented in the [integration audit](FINAL_INTEGRATION_AUDIT.md).
+The [scientific backend](../science-backend/README.md) documents source-only tests, pinned replay dependencies, how to obtain the original environmental artifact from the team, and the exact regeneration and checksum workflow. The Python code is part of this repository. The cached environmental bundle is distributed separately. The Vercel build uses the committed browser assets and does not need Python or the external archive.

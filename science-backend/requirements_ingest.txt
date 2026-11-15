@@ -1,0 +1,10 @@
+requests>=2.32,<3
+pandas>=2.2,<3
+numpy>=1.26,<3
+pyarrow>=17,<24
+shapely>=2.0,<3
+pyproj>=3.6,<4
+rasterio>=1.4,<2
+pystac-client>=0.8,<1
+planetary-computer>=1.0,<2
+pytest>=8,<9

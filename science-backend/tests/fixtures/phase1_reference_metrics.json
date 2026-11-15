@@ -1,0 +1,908 @@
+{
+ "metrics": {
+  "rotation_a|historical_1981_1983": {
+   "drainage_mm": 1130.16564,
+   "eta_total_mm": 1394.369492,
+   "living_cover_days": 429,
+   "rainfall_low_cover_index_mm": 1783.662197,
+   "water_deficit_mm": 880.507273
+  },
+  "rotation_a|historical_1982_1984": {
+   "drainage_mm": 1047.140778,
+   "eta_total_mm": 1481.859628,
+   "living_cover_days": 429,
+   "rainfall_low_cover_index_mm": 1708.700762,
+   "water_deficit_mm": 796.405426
+  },
+  "rotation_a|historical_1983_1985": {
+   "drainage_mm": 1041.763778,
+   "eta_total_mm": 1429.448003,
+   "living_cover_days": 429,
+   "rainfall_low_cover_index_mm": 1645.358732,
+   "water_deficit_mm": 848.028886
+  },
+  "rotation_a|historical_1984_1986": {
+   "drainage_mm": 836.737847,
+   "eta_total_mm": 1397.780792,
+   "living_cover_days": 429,
+   "rainfall_low_cover_index_mm": 1416.965277,
+   "water_deficit_mm": 868.054321
+  },
+  "rotation_a|historical_1985_1987": {
+   "drainage_mm": 996.652614,
+   "eta_total_mm": 1295.960247,
+   "living_cover_days": 429,
+   "rainfall_low_cover_index_mm": 1604.425654,
+   "water_deficit_mm": 982.071252
+  },
+  "rotation_a|historical_1986_1988": {
+   "drainage_mm": 1162.225293,
+   "eta_total_mm": 1284.024903,
+   "living_cover_days": 429,
+   "rainfall_low_cover_index_mm": 1802.323086,
+   "water_deficit_mm": 1003.036825
+  },
+  "rotation_a|historical_1987_1989": {
+   "drainage_mm": 1175.705737,
+   "eta_total_mm": 1313.009042,
+   "living_cover_days": 429,
+   "rainfall_low_cover_index_mm": 1705.219114,
+   "water_deficit_mm": 986.238287
+  },
+  "rotation_a|historical_1988_1990": {
+   "drainage_mm": 1232.631753,
+   "eta_total_mm": 1157.360297,
+   "living_cover_days": 429,
+   "rainfall_low_cover_index_mm": 1758.906717,
+   "water_deficit_mm": 1173.879489
+  },
+  "rotation_a|historical_1989_1991": {
+   "drainage_mm": 1020.391231,
+   "eta_total_mm": 1349.768217,
+   "living_cover_days": 429,
+   "rainfall_low_cover_index_mm": 1514.865694,
+   "water_deficit_mm": 937.054293
+  },
+  "rotation_a|historical_1990_1992": {
+   "drainage_mm": 1113.398898,
+   "eta_total_mm": 1375.877195,
+   "living_cover_days": 429,
+   "rainfall_low_cover_index_mm": 1617.671981,
+   "water_deficit_mm": 918.447279
+  },
+  "rotation_a|historical_1991_1993": {
+   "drainage_mm": 1171.590024,
+   "eta_total_mm": 1389.243873,
+   "living_cover_days": 429,
+   "rainfall_low_cover_index_mm": 1803.940381,
+   "water_deficit_mm": 894.358013
+  },
+  "rotation_a|historical_1992_1994": {
+   "drainage_mm": 1155.097578,
+   "eta_total_mm": 1392.730833,
+   "living_cover_days": 429,
+   "rainfall_low_cover_index_mm": 1800.432234,
+   "water_deficit_mm": 895.056129
+  },
+  "rotation_a|historical_1993_1995": {
+   "drainage_mm": 918.695326,
+   "eta_total_mm": 1290.214135,
+   "living_cover_days": 429,
+   "rainfall_low_cover_index_mm": 1606.412847,
+   "water_deficit_mm": 1008.93841
+  },
+  "rotation_a|historical_1994_1996": {
+   "drainage_mm": 774.499846,
+   "eta_total_mm": 1375.333504,
+   "living_cover_days": 429,
+   "rainfall_low_cover_index_mm": 1422.877004,
+   "water_deficit_mm": 919.151123
+  },
+  "rotation_a|historical_1995_1997": {
+   "drainage_mm": 897.383951,
+   "eta_total_mm": 1175.247655,
+   "living_cover_days": 429,
+   "rainfall_low_cover_index_mm": 1577.102503,
+   "water_deficit_mm": 1145.805749
+  },
+  "rotation_a|historical_1996_1998": {
+   "drainage_mm": 855.878603,
+   "eta_total_mm": 1345.102138,
+   "living_cover_days": 429,
+   "rainfall_low_cover_index_mm": 1507.820292,
+   "water_deficit_mm": 917.537418
+  },
+  "rotation_a|historical_1997_1999": {
+   "drainage_mm": 839.519738,
+   "eta_total_mm": 1457.274814,
+   "living_cover_days": 429,
+   "rainfall_low_cover_index_mm": 1449.98326,
+   "water_deficit_mm": 802.490746
+  },
+  "rotation_a|historical_1998_2000": {
+   "drainage_mm": 872.21662,
+   "eta_total_mm": 1622.363829,
+   "living_cover_days": 429,
+   "rainfall_low_cover_index_mm": 1502.670386,
+   "water_deficit_mm": 605.167078
+  },
+  "rotation_a|historical_1999_2001": {
+   "drainage_mm": 856.246925,
+   "eta_total_mm": 1454.19204,
+   "living_cover_days": 429,
+   "rainfall_low_cover_index_mm": 1446.489167,
+   "water_deficit_mm": 805.477447
+  },
+  "rotation_a|historical_2000_2002": {
+   "drainage_mm": 757.957215,
+   "eta_total_mm": 1180.937527,
+   "living_cover_days": 429,
+   "rainfall_low_cover_index_mm": 1409.547763,
+   "water_deficit_mm": 1088.386078
+  },
+  "rotation_a|historical_2001_2003": {
+   "drainage_mm": 764.017808,
+   "eta_total_mm": 1069.965314,
+   "living_cover_days": 429,
+   "rainfall_low_cover_index_mm": 1398.441191,
+   "water_deficit_mm": 1214.353494
+  },
+  "rotation_a|historical_2002_2004": {
+   "drainage_mm": 836.42508,
+   "eta_total_mm": 1205.267976,
+   "living_cover_days": 429,
+   "rainfall_low_cover_index_mm": 1439.549813,
+   "water_deficit_mm": 1067.559568
+  },
+  "rotation_a|historical_2003_2005": {
+   "drainage_mm": 1056.579608,
+   "eta_total_mm": 1272.555259,
+   "living_cover_days": 429,
+   "rainfall_low_cover_index_mm": 1639.275096,
+   "water_deficit_mm": 1005.631215
+  },
+  "rotation_a|historical_2004_2006": {
+   "drainage_mm": 833.054914,
+   "eta_total_mm": 1270.528204,
+   "living_cover_days": 429,
+   "rainfall_low_cover_index_mm": 1430.814152,
+   "water_deficit_mm": 1022.474258
+  },
+  "rotation_a|historical_2005_2007": {
+   "drainage_mm": 954.783428,
+   "eta_total_mm": 1359.171792,
+   "living_cover_days": 429,
+   "rainfall_low_cover_index_mm": 1587.851986,
+   "water_deficit_mm": 926.781315
+  },
+  "rotation_a|historical_2006_2008": {
+   "drainage_mm": 824.992241,
+   "eta_total_mm": 1442.374751,
+   "living_cover_days": 429,
+   "rainfall_low_cover_index_mm": 1513.659545,
+   "water_deficit_mm": 844.135937
+  },
+  "rotation_a|historical_2007_2009": {
+   "drainage_mm": 1032.939474,
+   "eta_total_mm": 1383.024593,
+   "living_cover_days": 429,
+   "rainfall_low_cover_index_mm": 1653.286187,
+   "water_deficit_mm": 884.120219
+  },
+  "rotation_a|historical_2008_2010": {
+   "drainage_mm": 844.044863,
+   "eta_total_mm": 1390.829718,
+   "living_cover_days": 429,
+   "rainfall_low_cover_index_mm": 1493.789199,
+   "water_deficit_mm": 867.089868
+  },
+  "rotation_a|historical_2009_2011": {
+   "drainage_mm": 632.765376,
+   "eta_total_mm": 1367.527701,
+   "living_cover_days": 429,
+   "rainfall_low_cover_index_mm": 1281.495447,
+   "water_deficit_mm": 901.092595
+  },
+  "rotation_a|historical_2010_2012": {
+   "drainage_mm": 673.565672,
+   "eta_total_mm": 1448.615845,
+   "living_cover_days": 429,
+   "rainfall_low_cover_index_mm": 1326.740564,
+   "water_deficit_mm": 845.747236
+  },
+  "rotation_a|historical_2011_2013": {
+   "drainage_mm": 725.752738,
+   "eta_total_mm": 1485.034267,
+   "living_cover_days": 429,
+   "rainfall_low_cover_index_mm": 1385.054804,
+   "water_deficit_mm": 775.64771
+  },
+  "rotation_a|historical_2012_2014": {
+   "drainage_mm": 955.65096,
+   "eta_total_mm": 1522.61483,
+   "living_cover_days": 429,
+   "rainfall_low_cover_index_mm": 1553.850551,
+   "water_deficit_mm": 725.151082
+  },
+  "rotation_a|historical_2013_2015": {
+   "drainage_mm": 971.425855,
+   "eta_total_mm": 1445.818358,
+   "living_cover_days": 429,
+   "rainfall_low_cover_index_mm": 1585.835133,
+   "water_deficit_mm": 820.119814
+  },
+  "rotation_a|historical_2014_2016": {
+   "drainage_mm": 1142.657485,
+   "eta_total_mm": 1313.083344,
+   "living_cover_days": 429,
+   "rainfall_low_cover_index_mm": 1719.712193,
+   "water_deficit_mm": 950.769329
+  },
+  "rotation_a|historical_2015_2017": {
+   "drainage_mm": 998.311356,
+   "eta_total_mm": 1290.393873,
+   "living_cover_days": 429,
+   "rainfall_low_cover_index_mm": 1674.668829,
+   "water_deficit_mm": 995.213954
+  },
+  "rotation_a|historical_2016_2018": {
+   "drainage_mm": 978.947443,
+   "eta_total_mm": 1341.06176,
+   "living_cover_days": 429,
+   "rainfall_low_cover_index_mm": 1578.469545,
+   "water_deficit_mm": 905.41083
+  },
+  "rotation_a|historical_2017_2019": {
+   "drainage_mm": 871.625331,
+   "eta_total_mm": 1404.166497,
+   "living_cover_days": 429,
+   "rainfall_low_cover_index_mm": 1540.907729,
+   "water_deficit_mm": 857.243303
+  },
+  "rotation_a|historical_2018_2020": {
+   "drainage_mm": 951.476254,
+   "eta_total_mm": 1440.49213,
+   "living_cover_days": 429,
+   "rainfall_low_cover_index_mm": 1609.67815,
+   "water_deficit_mm": 826.061149
+  },
+  "rotation_a|historical_2019_2021": {
+   "drainage_mm": 877.095305,
+   "eta_total_mm": 1390.11609,
+   "living_cover_days": 429,
+   "rainfall_low_cover_index_mm": 1513.122104,
+   "water_deficit_mm": 889.897314
+  },
+  "rotation_a|historical_2020_2022": {
+   "drainage_mm": 851.651583,
+   "eta_total_mm": 1482.101874,
+   "living_cover_days": 429,
+   "rainfall_low_cover_index_mm": 1467.944084,
+   "water_deficit_mm": 796.576751
+  },
+  "rotation_a|historical_2021_2023": {
+   "drainage_mm": 941.920734,
+   "eta_total_mm": 1329.902167,
+   "living_cover_days": 429,
+   "rainfall_low_cover_index_mm": 1519.066398,
+   "water_deficit_mm": 969.455316
+  },
+  "rotation_a|historical_2022_2024": {
+   "drainage_mm": 960.824107,
+   "eta_total_mm": 1400.785646,
+   "living_cover_days": 429,
+   "rainfall_low_cover_index_mm": 1593.805888,
+   "water_deficit_mm": 870.595129
+  },
+  "rotation_a|historical_2023_2025": {
+   "drainage_mm": 1127.440723,
+   "eta_total_mm": 1299.810499,
+   "living_cover_days": 429,
+   "rainfall_low_cover_index_mm": 1693.051336,
+   "water_deficit_mm": 989.695868
+  },
+  "rotation_b|historical_1981_1983": {
+   "drainage_mm": 909.401332,
+   "eta_total_mm": 1615.133801,
+   "living_cover_days": 768,
+   "rainfall_low_cover_index_mm": 1032.021578,
+   "water_deficit_mm": 913.407878
+  },
+  "rotation_b|historical_1982_1984": {
+   "drainage_mm": 791.515015,
+   "eta_total_mm": 1737.485392,
+   "living_cover_days": 769,
+   "rainfall_low_cover_index_mm": 913.615433,
+   "water_deficit_mm": 796.405426
+  },
+  "rotation_b|historical_1983_1985": {
+   "drainage_mm": 796.899535,
+   "eta_total_mm": 1674.312246,
+   "living_cover_days": 769,
+   "rainfall_low_cover_index_mm": 1126.245264,
+   "water_deficit_mm": 860.301986
+  },
+  "rotation_b|historical_1984_1986": {
+   "drainage_mm": 596.373306,
+   "eta_total_mm": 1638.145334,
+   "living_cover_days": 768,
+   "rainfall_low_cover_index_mm": 893.863419,
+   "water_deficit_mm": 880.089747
+  },
+  "rotation_b|historical_1985_1987": {
+   "drainage_mm": 742.134471,
+   "eta_total_mm": 1550.47839,
+   "living_cover_days": 768,
+   "rainfall_low_cover_index_mm": 919.032737,
+   "water_deficit_mm": 982.071252
+  },
+  "rotation_b|historical_1986_1988": {
+   "drainage_mm": 897.209487,
+   "eta_total_mm": 1549.040709,
+   "living_cover_days": 769,
+   "rainfall_low_cover_index_mm": 1056.470006,
+   "water_deficit_mm": 1003.036825
+  },
+  "rotation_b|historical_1987_1989": {
+   "drainage_mm": 911.585896,
+   "eta_total_mm": 1577.128882,
+   "living_cover_days": 769,
+   "rainfall_low_cover_index_mm": 1017.868788,
+   "water_deficit_mm": 986.238287
+  },
+  "rotation_b|historical_1988_1990": {
+   "drainage_mm": 975.242231,
+   "eta_total_mm": 1414.749819,
+   "living_cover_days": 768,
+   "rainfall_low_cover_index_mm": 1150.423296,
+   "water_deficit_mm": 1173.879489
+  },
+  "rotation_b|historical_1989_1991": {
+   "drainage_mm": 761.663829,
+   "eta_total_mm": 1608.495619,
+   "living_cover_days": 768,
+   "rainfall_low_cover_index_mm": 859.474186,
+   "water_deficit_mm": 937.054293
+  },
+  "rotation_b|historical_1990_1992": {
+   "drainage_mm": 853.002724,
+   "eta_total_mm": 1636.273369,
+   "living_cover_days": 769,
+   "rainfall_low_cover_index_mm": 927.389898,
+   "water_deficit_mm": 918.447279
+  },
+  "rotation_b|historical_1991_1993": {
+   "drainage_mm": 914.369387,
+   "eta_total_mm": 1646.46451,
+   "living_cover_days": 769,
+   "rainfall_low_cover_index_mm": 1035.39154,
+   "water_deficit_mm": 894.358013
+  },
+  "rotation_b|historical_1992_1994": {
+   "drainage_mm": 902.962183,
+   "eta_total_mm": 1644.866229,
+   "living_cover_days": 768,
+   "rainfall_low_cover_index_mm": 950.303174,
+   "water_deficit_mm": 895.056129
+  },
+  "rotation_b|historical_1993_1995": {
+   "drainage_mm": 691.766818,
+   "eta_total_mm": 1517.142643,
+   "living_cover_days": 768,
+   "rainfall_low_cover_index_mm": 941.652797,
+   "water_deficit_mm": 1038.572606
+  },
+  "rotation_b|historical_1994_1996": {
+   "drainage_mm": 546.656747,
+   "eta_total_mm": 1603.176602,
+   "living_cover_days": 769,
+   "rainfall_low_cover_index_mm": 759.106649,
+   "water_deficit_mm": 947.194545
+  },
+  "rotation_b|historical_1995_1997": {
+   "drainage_mm": 637.615494,
+   "eta_total_mm": 1435.016112,
+   "living_cover_days": 769,
+   "rainfall_low_cover_index_mm": 949.393985,
+   "water_deficit_mm": 1145.805749
+  },
+  "rotation_b|historical_1996_1998": {
+   "drainage_mm": 600.739907,
+   "eta_total_mm": 1600.240834,
+   "living_cover_days": 768,
+   "rainfall_low_cover_index_mm": 969.134751,
+   "water_deficit_mm": 925.823196
+  },
+  "rotation_b|historical_1997_1999": {
+   "drainage_mm": 581.948335,
+   "eta_total_mm": 1714.846218,
+   "living_cover_days": 768,
+   "rainfall_low_cover_index_mm": 871.041067,
+   "water_deficit_mm": 802.490746
+  },
+  "rotation_b|historical_1998_2000": {
+   "drainage_mm": 612.888514,
+   "eta_total_mm": 1881.691935,
+   "living_cover_days": 769,
+   "rainfall_low_cover_index_mm": 846.752685,
+   "water_deficit_mm": 605.167078
+  },
+  "rotation_b|historical_1999_2001": {
+   "drainage_mm": 595.749448,
+   "eta_total_mm": 1714.689517,
+   "living_cover_days": 769,
+   "rainfall_low_cover_index_mm": 809.461798,
+   "water_deficit_mm": 805.477447
+  },
+  "rotation_b|historical_2000_2002": {
+   "drainage_mm": 500.366105,
+   "eta_total_mm": 1438.528637,
+   "living_cover_days": 768,
+   "rainfall_low_cover_index_mm": 911.791215,
+   "water_deficit_mm": 1088.386078
+  },
+  "rotation_b|historical_2001_2003": {
+   "drainage_mm": 505.080113,
+   "eta_total_mm": 1328.903009,
+   "living_cover_days": 768,
+   "rainfall_low_cover_index_mm": 888.21681,
+   "water_deficit_mm": 1214.353494
+  },
+  "rotation_b|historical_2002_2004": {
+   "drainage_mm": 576.986907,
+   "eta_total_mm": 1464.70615,
+   "living_cover_days": 769,
+   "rainfall_low_cover_index_mm": 767.111315,
+   "water_deficit_mm": 1068.753012
+  },
+  "rotation_b|historical_2003_2005": {
+   "drainage_mm": 814.204349,
+   "eta_total_mm": 1514.930517,
+   "living_cover_days": 769,
+   "rainfall_low_cover_index_mm": 809.45828,
+   "water_deficit_mm": 1019.669342
+  },
+  "rotation_b|historical_2004_2006": {
+   "drainage_mm": 640.680071,
+   "eta_total_mm": 1462.903048,
+   "living_cover_days": 768,
+   "rainfall_low_cover_index_mm": 773.580569,
+   "water_deficit_mm": 1087.016928
+  },
+  "rotation_b|historical_2005_2007": {
+   "drainage_mm": 734.754442,
+   "eta_total_mm": 1579.200778,
+   "living_cover_days": 768,
+   "rainfall_low_cover_index_mm": 1081.913319,
+   "water_deficit_mm": 964.386264
+  },
+  "rotation_b|historical_2006_2008": {
+   "drainage_mm": 567.598169,
+   "eta_total_mm": 1699.768823,
+   "living_cover_days": 769,
+   "rainfall_low_cover_index_mm": 852.275332,
+   "water_deficit_mm": 844.135937
+  },
+  "rotation_b|historical_2007_2009": {
+   "drainage_mm": 776.648091,
+   "eta_total_mm": 1639.315975,
+   "living_cover_days": 769,
+   "rainfall_low_cover_index_mm": 1001.211467,
+   "water_deficit_mm": 884.120219
+  },
+  "rotation_b|historical_2008_2010": {
+   "drainage_mm": 588.214875,
+   "eta_total_mm": 1646.659706,
+   "living_cover_days": 768,
+   "rainfall_low_cover_index_mm": 843.707816,
+   "water_deficit_mm": 871.813876
+  },
+  "rotation_b|historical_2009_2011": {
+   "drainage_mm": 409.194368,
+   "eta_total_mm": 1591.098709,
+   "living_cover_days": 768,
+   "rainfall_low_cover_index_mm": 682.577553,
+   "water_deficit_mm": 948.796287
+  },
+  "rotation_b|historical_2010_2012": {
+   "drainage_mm": 446.258764,
+   "eta_total_mm": 1675.922753,
+   "living_cover_days": 769,
+   "rainfall_low_cover_index_mm": 898.644327,
+   "water_deficit_mm": 882.94887
+  },
+  "rotation_b|historical_2011_2013": {
+   "drainage_mm": 474.156248,
+   "eta_total_mm": 1736.630756,
+   "living_cover_days": 769,
+   "rainfall_low_cover_index_mm": 807.875027,
+   "water_deficit_mm": 775.64771
+  },
+  "rotation_b|historical_2012_2014": {
+   "drainage_mm": 699.139458,
+   "eta_total_mm": 1779.126331,
+   "living_cover_days": 768,
+   "rainfall_low_cover_index_mm": 1028.936715,
+   "water_deficit_mm": 725.151082
+  },
+  "rotation_b|historical_2013_2015": {
+   "drainage_mm": 714.412237,
+   "eta_total_mm": 1702.831975,
+   "living_cover_days": 768,
+   "rainfall_low_cover_index_mm": 1055.038407,
+   "water_deficit_mm": 820.119814
+  },
+  "rotation_b|historical_2014_2016": {
+   "drainage_mm": 885.309641,
+   "eta_total_mm": 1570.431187,
+   "living_cover_days": 769,
+   "rainfall_low_cover_index_mm": 957.637645,
+   "water_deficit_mm": 950.769329
+  },
+  "rotation_b|historical_2015_2017": {
+   "drainage_mm": 735.340077,
+   "eta_total_mm": 1553.365152,
+   "living_cover_days": 769,
+   "rainfall_low_cover_index_mm": 990.828964,
+   "water_deficit_mm": 995.213954
+  },
+  "rotation_b|historical_2016_2018": {
+   "drainage_mm": 717.826968,
+   "eta_total_mm": 1602.182234,
+   "living_cover_days": 768,
+   "rainfall_low_cover_index_mm": 1021.024311,
+   "water_deficit_mm": 911.650965
+  },
+  "rotation_b|historical_2017_2019": {
+   "drainage_mm": 609.439744,
+   "eta_total_mm": 1666.352084,
+   "living_cover_days": 768,
+   "rainfall_low_cover_index_mm": 760.665213,
+   "water_deficit_mm": 859.297661
+  },
+  "rotation_b|historical_2018_2020": {
+   "drainage_mm": 720.564588,
+   "eta_total_mm": 1671.403796,
+   "living_cover_days": 769,
+   "rainfall_low_cover_index_mm": 830.946281,
+   "water_deficit_mm": 860.95065
+  },
+  "rotation_b|historical_2019_2021": {
+   "drainage_mm": 640.987846,
+   "eta_total_mm": 1626.223549,
+   "living_cover_days": 769,
+   "rainfall_low_cover_index_mm": 977.082759,
+   "water_deficit_mm": 918.255717
+  },
+  "rotation_b|historical_2020_2022": {
+   "drainage_mm": 592.495198,
+   "eta_total_mm": 1741.258259,
+   "living_cover_days": 768,
+   "rainfall_low_cover_index_mm": 962.993853,
+   "water_deficit_mm": 796.576751
+  },
+  "rotation_b|historical_2021_2023": {
+   "drainage_mm": 678.282359,
+   "eta_total_mm": 1593.540541,
+   "living_cover_days": 768,
+   "rainfall_low_cover_index_mm": 961.554565,
+   "water_deficit_mm": 969.455316
+  },
+  "rotation_b|historical_2022_2024": {
+   "drainage_mm": 694.985977,
+   "eta_total_mm": 1666.623776,
+   "living_cover_days": 769,
+   "rainfall_low_cover_index_mm": 851.503265,
+   "water_deficit_mm": 870.595129
+  },
+  "rotation_b|historical_2023_2025": {
+   "drainage_mm": 871.241082,
+   "eta_total_mm": 1556.01014,
+   "living_cover_days": 769,
+   "rainfall_low_cover_index_mm": 908.805956,
+   "water_deficit_mm": 989.695868
+  },
+  "rotation_c|historical_1981_1983": {
+   "drainage_mm": 1019.53004,
+   "eta_total_mm": 1505.005093,
+   "living_cover_days": 644,
+   "rainfall_low_cover_index_mm": 1509.889111,
+   "water_deficit_mm": 1016.726241
+  },
+  "rotation_c|historical_1982_1984": {
+   "drainage_mm": 766.284577,
+   "eta_total_mm": 1762.715829,
+   "living_cover_days": 644,
+   "rainfall_low_cover_index_mm": 993.434154,
+   "water_deficit_mm": 741.75848
+  },
+  "rotation_c|historical_1983_1985": {
+   "drainage_mm": 855.85902,
+   "eta_total_mm": 1615.352761,
+   "living_cover_days": 645,
+   "rainfall_low_cover_index_mm": 1203.26409,
+   "water_deficit_mm": 883.655513
+  },
+  "rotation_c|historical_1984_1986": {
+   "drainage_mm": 674.708291,
+   "eta_total_mm": 1559.810349,
+   "living_cover_days": 644,
+   "rainfall_low_cover_index_mm": 1150.875582,
+   "water_deficit_mm": 934.12776
+  },
+  "rotation_c|historical_1985_1987": {
+   "drainage_mm": 827.662556,
+   "eta_total_mm": 1464.950305,
+   "living_cover_days": 644,
+   "rainfall_low_cover_index_mm": 1221.823172,
+   "water_deficit_mm": 1046.414935
+  },
+  "rotation_c|historical_1986_1988": {
+   "drainage_mm": 965.00558,
+   "eta_total_mm": 1481.244617,
+   "living_cover_days": 644,
+   "rainfall_low_cover_index_mm": 1333.954094,
+   "water_deficit_mm": 1049.045227
+  },
+  "rotation_c|historical_1987_1989": {
+   "drainage_mm": 962.933722,
+   "eta_total_mm": 1525.781056,
+   "living_cover_days": 645,
+   "rainfall_low_cover_index_mm": 1280.060409,
+   "water_deficit_mm": 1012.731703
+  },
+  "rotation_c|historical_1988_1990": {
+   "drainage_mm": 1075.944685,
+   "eta_total_mm": 1314.047365,
+   "living_cover_days": 644,
+   "rainfall_low_cover_index_mm": 1347.150553,
+   "water_deficit_mm": 1249.119018
+  },
+  "rotation_c|historical_1989_1991": {
+   "drainage_mm": 790.607676,
+   "eta_total_mm": 1579.551773,
+   "living_cover_days": 644,
+   "rainfall_low_cover_index_mm": 1082.348125,
+   "water_deficit_mm": 926.675212
+  },
+  "rotation_c|historical_1990_1992": {
+   "drainage_mm": 857.000695,
+   "eta_total_mm": 1632.275398,
+   "living_cover_days": 644,
+   "rainfall_low_cover_index_mm": 1177.122797,
+   "water_deficit_mm": 896.562879
+  },
+  "rotation_c|historical_1991_1993": {
+   "drainage_mm": 984.958924,
+   "eta_total_mm": 1575.874973,
+   "living_cover_days": 645,
+   "rainfall_low_cover_index_mm": 1402.823193,
+   "water_deficit_mm": 950.182831
+  },
+  "rotation_c|historical_1992_1994": {
+   "drainage_mm": 901.53868,
+   "eta_total_mm": 1646.289732,
+   "living_cover_days": 644,
+   "rainfall_low_cover_index_mm": 1177.256328,
+   "water_deficit_mm": 870.275289
+  },
+  "rotation_c|historical_1993_1995": {
+   "drainage_mm": 777.370409,
+   "eta_total_mm": 1431.539052,
+   "living_cover_days": 644,
+   "rainfall_low_cover_index_mm": 1188.697159,
+   "water_deficit_mm": 1110.179906
+  },
+  "rotation_c|historical_1994_1996": {
+   "drainage_mm": 662.499931,
+   "eta_total_mm": 1487.333419,
+   "living_cover_days": 644,
+   "rainfall_low_cover_index_mm": 1044.780363,
+   "water_deficit_mm": 1051.607838
+  },
+  "rotation_c|historical_1995_1997": {
+   "drainage_mm": 708.538906,
+   "eta_total_mm": 1364.0927,
+   "living_cover_days": 645,
+   "rainfall_low_cover_index_mm": 1137.107536,
+   "water_deficit_mm": 1170.965002
+  },
+  "rotation_c|historical_1996_1998": {
+   "drainage_mm": 659.642285,
+   "eta_total_mm": 1541.338457,
+   "living_cover_days": 644,
+   "rainfall_low_cover_index_mm": 1137.809541,
+   "water_deficit_mm": 964.307887
+  },
+  "rotation_c|historical_1997_1999": {
+   "drainage_mm": 688.516963,
+   "eta_total_mm": 1608.277589,
+   "living_cover_days": 644,
+   "rainfall_low_cover_index_mm": 1126.746632,
+   "water_deficit_mm": 899.840556
+  },
+  "rotation_c|historical_1998_2000": {
+   "drainage_mm": 636.305431,
+   "eta_total_mm": 1858.275018,
+   "living_cover_days": 644,
+   "rainfall_low_cover_index_mm": 1166.15813,
+   "water_deficit_mm": 604.307186
+  },
+  "rotation_c|historical_1999_2001": {
+   "drainage_mm": 592.902536,
+   "eta_total_mm": 1717.53643,
+   "living_cover_days": 645,
+   "rainfall_low_cover_index_mm": 974.738658,
+   "water_deficit_mm": 787.851185
+  },
+  "rotation_c|historical_2000_2002": {
+   "drainage_mm": 585.003793,
+   "eta_total_mm": 1353.890949,
+   "living_cover_days": 644,
+   "rainfall_low_cover_index_mm": 1071.95439,
+   "water_deficit_mm": 1147.212846
+  },
+  "rotation_c|historical_2001_2003": {
+   "drainage_mm": 628.065426,
+   "eta_total_mm": 1205.917696,
+   "living_cover_days": 644,
+   "rainfall_low_cover_index_mm": 1027.436675,
+   "water_deficit_mm": 1311.881608
+  },
+  "rotation_c|historical_2002_2004": {
+   "drainage_mm": 609.946908,
+   "eta_total_mm": 1431.746148,
+   "living_cover_days": 644,
+   "rainfall_low_cover_index_mm": 1043.119256,
+   "water_deficit_mm": 1078.554554
+  },
+  "rotation_c|historical_2003_2005": {
+   "drainage_mm": 801.317276,
+   "eta_total_mm": 1527.81759,
+   "living_cover_days": 645,
+   "rainfall_low_cover_index_mm": 1256.137998,
+   "water_deficit_mm": 985.164633
+  },
+  "rotation_c|historical_2004_2006": {
+   "drainage_mm": 709.937973,
+   "eta_total_mm": 1393.645146,
+   "living_cover_days": 644,
+   "rainfall_low_cover_index_mm": 873.172679,
+   "water_deficit_mm": 1134.258654
+  },
+  "rotation_c|historical_2005_2007": {
+   "drainage_mm": 853.179392,
+   "eta_total_mm": 1460.775828,
+   "living_cover_days": 644,
+   "rainfall_low_cover_index_mm": 1366.307806,
+   "water_deficit_mm": 1036.665817
+  },
+  "rotation_c|historical_2006_2008": {
+   "drainage_mm": 674.17912,
+   "eta_total_mm": 1593.187872,
+   "living_cover_days": 644,
+   "rainfall_low_cover_index_mm": 1142.613639,
+   "water_deficit_mm": 931.662159
+  },
+  "rotation_c|historical_2007_2009": {
+   "drainage_mm": 802.005446,
+   "eta_total_mm": 1613.958621,
+   "living_cover_days": 645,
+   "rainfall_low_cover_index_mm": 1164.463208,
+   "water_deficit_mm": 894.674899
+  },
+  "rotation_c|historical_2008_2010": {
+   "drainage_mm": 642.655485,
+   "eta_total_mm": 1592.219096,
+   "living_cover_days": 644,
+   "rainfall_low_cover_index_mm": 1149.791262,
+   "water_deficit_mm": 901.191702
+  },
+  "rotation_c|historical_2009_2011": {
+   "drainage_mm": 485.691716,
+   "eta_total_mm": 1514.60136,
+   "living_cover_days": 644,
+   "rainfall_low_cover_index_mm": 842.543826,
+   "water_deficit_mm": 1001.193717
+  },
+  "rotation_c|historical_2010_2012": {
+   "drainage_mm": 561.294034,
+   "eta_total_mm": 1560.887484,
+   "living_cover_days": 644,
+   "rainfall_low_cover_index_mm": 1023.330038,
+   "water_deficit_mm": 979.749577
+  },
+  "rotation_c|historical_2011_2013": {
+   "drainage_mm": 520.669815,
+   "eta_total_mm": 1690.117189,
+   "living_cover_days": 645,
+   "rainfall_low_cover_index_mm": 984.70968,
+   "water_deficit_mm": 797.90822
+  },
+  "rotation_c|historical_2012_2014": {
+   "drainage_mm": 724.456649,
+   "eta_total_mm": 1753.809141,
+   "living_cover_days": 644,
+   "rainfall_low_cover_index_mm": 1077.052033,
+   "water_deficit_mm": 730.949188
+  },
+  "rotation_c|historical_2013_2015": {
+   "drainage_mm": 763.229732,
+   "eta_total_mm": 1654.01448,
+   "living_cover_days": 644,
+   "rainfall_low_cover_index_mm": 1269.074088,
+   "water_deficit_mm": 844.423741
+  },
+  "rotation_c|historical_2014_2016": {
+   "drainage_mm": 912.481342,
+   "eta_total_mm": 1543.259487,
+   "living_cover_days": 644,
+   "rainfall_low_cover_index_mm": 1266.317114,
+   "water_deficit_mm": 955.834264
+  },
+  "rotation_c|historical_2015_2017": {
+   "drainage_mm": 689.55542,
+   "eta_total_mm": 1599.149809,
+   "living_cover_days": 645,
+   "rainfall_low_cover_index_mm": 1053.380977,
+   "water_deficit_mm": 923.516291
+  },
+  "rotation_c|historical_2016_2018": {
+   "drainage_mm": 832.731763,
+   "eta_total_mm": 1487.27744,
+   "living_cover_days": 644,
+   "rainfall_low_cover_index_mm": 1273.089625,
+   "water_deficit_mm": 1003.015435
+  },
+  "rotation_c|historical_2017_2019": {
+   "drainage_mm": 667.803973,
+   "eta_total_mm": 1607.987855,
+   "living_cover_days": 644,
+   "rainfall_low_cover_index_mm": 1210.812317,
+   "water_deficit_mm": 892.135795
+  },
+  "rotation_c|historical_2018_2020": {
+   "drainage_mm": 741.231402,
+   "eta_total_mm": 1650.736983,
+   "living_cover_days": 644,
+   "rainfall_low_cover_index_mm": 1034.703641,
+   "water_deficit_mm": 857.449973
+  },
+  "rotation_c|historical_2019_2021": {
+   "drainage_mm": 757.759615,
+   "eta_total_mm": 1509.45178,
+   "living_cover_days": 645,
+   "rainfall_low_cover_index_mm": 1203.002775,
+   "water_deficit_mm": 1015.166795
+  },
+  "rotation_c|historical_2020_2022": {
+   "drainage_mm": 602.094775,
+   "eta_total_mm": 1731.658683,
+   "living_cover_days": 644,
+   "rainfall_low_cover_index_mm": 1064.543482,
+   "water_deficit_mm": 786.028903
+  },
+  "rotation_c|historical_2021_2023": {
+   "drainage_mm": 642.56033,
+   "eta_total_mm": 1629.262571,
+   "living_cover_days": 644,
+   "rainfall_low_cover_index_mm": 1080.516291,
+   "water_deficit_mm": 900.430171
+  },
+  "rotation_c|historical_2022_2024": {
+   "drainage_mm": 755.629305,
+   "eta_total_mm": 1605.980448,
+   "living_cover_days": 644,
+   "rainfall_low_cover_index_mm": 1136.043958,
+   "water_deficit_mm": 909.013037
+  },
+  "rotation_c|historical_2023_2025": {
+   "drainage_mm": 957.099354,
+   "eta_total_mm": 1470.151868,
+   "living_cover_days": 645,
+   "rainfall_low_cover_index_mm": 1211.193874,
+   "water_deficit_mm": 1058.3331
+  }
+ },
+ "note": "Phase 1 reference metrics (synthetic fixture seed=42, 1981-2025, config/phase1_frozen). Regression anchor."
+}

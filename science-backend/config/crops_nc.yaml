@@ -1,0 +1,455 @@
+# Hinge crop library v2 (Phase 2), North Carolina (demo: Johnston County; Coastal Plain / Piedmont boundary).
+# status classes:
+#   sourced              prescriptive source value; violation is a HARD constraint
+#   sourced_descriptive  usual practice or rule-of-thumb range; outside-range is flagged for verification, never a hard rejection
+#   sourced_secondary    value transcribed from a secondary reproduction of a primary source
+#   assumed / unverified_generic   placeholder; keeps rotations at feasible_pending_verification when relied upon
+# evidence_ids point to config/evidence_register.yaml. review_status stays "unverified" until a human checks each page.
+sources:
+  ncsu_winter_cover_crops:
+    citation: Gatiboni & Reberg-Horton. Winter Annual Cover Crops. NC State Extension AG-439-58.
+    url: https://content.ces.ncsu.edu/winter-annual-cover-crops
+    used_for: Tables 1 and 4 (cover-crop planting dates), termination timing, Hessian-fly note, late-soybean-harvest conflict
+    geography: Coastal Plain / Piedmont rows as labeled in the tables
+  fao56:
+    citation: Allen et al. 1998. FAO Irrigation and Drainage Paper 56, Tables 11 and 12; Chapters 3-4.
+    url: https://www.fao.org/4/x0490e/x0490e00.htm
+    used_for: Kc values and stage lengths (generic, not NC-specific)
+    geography: Global reference values; Table 12 assumes sub-humid climate, RHmin about 45%, u2 about 2 m/s
+  ncsu_soy_vann:
+    citation: NC State Soybean Extension (R. Vann), planting date and maturity group research updates, 2020-2023.
+    url: https://soybeans.ces.ncsu.edu/2023/05/plant-full-season-soybeans-by-mid-may-to-prevent-yield-loss/
+    used_for: Yield declines when planting after mid-May; double-crop behind wheat typically 2nd week of June to early July
+    geography: North Carolina (15 environments, 2019-2022)
+  ncsu_soy_guide_via_press:
+    citation: NC State Soybean Production Guide optimal planting date May 1 - June 10, as quoted by R. Vann (Southeast Farm
+      Press).
+    url: https://www.farmprogress.com/management/early-planting-key-to-top-soybean-yields
+    used_for: Soybean optimal planting window (secondary source; verify against the guide itself)
+    geography: North Carolina
+  ncsu_corn_late:
+    citation: NC State Corn Extension. Management for Late Planted Corn.
+    url: https://corn.ces.ncsu.edu/corn-production-information/management-for-late-planted-corn
+    used_for: Corn can be planted mid to late June with reasonable opportunity for profit; hybrids of 108-114 days
+    geography: Piedmont / western NC and Virginia
+  ncsu_wheat_person_co:
+    citation: 'NC State Extension, Person County: Should I Plant Wheat Early? (cites NC Small Grains Production Guide map).'
+    url: https://person.ces.ncsu.edu/2023/09/should-i-plant-wheat-early/
+    used_for: Suggested wheat planting start dates around October 15-20 (Piedmont)
+    geography: Piedmont
+  ncsu_wheat_hertford:
+    citation: 'NC State Extension, Hertford County: optimal wheat planting Oct 20-25 (2022 post).'
+    url: https://hertford.ces.ncsu.edu/2022/10/updated-wheat-planting-long-term-weather-forecast
+    used_for: Optimal wheat planting start, northeastern Coastal Plain
+    geography: Northeastern Coastal Plain
+  ncsu_soybean_double_crop:
+    citation: 'NC State Soybean Extension (2022): 15-35% of NC soybean acres follow a small grain; planting 2nd week of June
+      to early July.'
+    url: https://soybeans.ces.ncsu.edu/2022/03/what-is-the-best-soybean-maturity-group-to-plant-behind-wheat
+    used_for: Double-crop soybean planting dates
+    geography: North Carolina
+  hinge_assumption:
+    citation: Team assumption for demonstration; not a published recommendation.
+    url: null
+    used_for: 'Placeholders needed to run the engine; flagged status: assumed'
+    geography: null
+  nass_nc_usual_dates:
+    citation: USDA NASS. North Carolina Agricultural Statistics, 'Usual Planting and Harvesting Dates' (p. 58).
+    url: https://www.nass.usda.gov/Statistics_by_State/North_Carolina/Publications/Annual_Statistical_Bulletin/AgStat/Section05.pdf
+    used_for: Statewide usual planting/harvest windows for corn (grain), soybeans, wheat (grain)
+    geography: North Carolina statewide
+  ncsu_wheat_sampson:
+    citation: NC State Extension Sampson County, Wheat Planting Recommendations (2025-10).
+    url: https://sampson.ces.ncsu.edu/2025/10/wheat-planting-recommendations/
+    used_for: Optimum wheat planting late October through Thanksgiving
+    geography: Coastal Plain (county adjacent to Johnston)
+  ncsu_soy_fullseason:
+    citation: 'NC State Soybean Extension (2023-05): delaying planting past mid-May decreases yield.'
+    url: https://soybeans.ces.ncsu.edu/2023/05/plant-full-season-soybeans-by-mid-may-to-prevent-yield-loss/
+    used_for: Soybean planting-date direction
+    geography: North Carolina
+  fao56_table11_secondary:
+    citation: FAO-56 Table 11 stage lengths as transcribed by secondary sources (irrigationcalculators.com; Clemson LGP).
+    url: https://irrigationcalculators.com/reference/crop-coefficient-table
+    used_for: Stage lengths (non-NC rows)
+    geography: Idaho / Central USA rows
+crops:
+  corn:
+    name: Corn (grain)
+    scientific_name: Zea mays
+    role: cash_crop
+    family: Poaceae
+    season: summer
+    planting_window:
+      earliest: 04-01
+      latest: 05-20
+      status: sourced_descriptive
+      source_id: nass_nc_usual_dates
+      evidence_ids:
+      - ev_nass_usual_dates
+      most_active:
+        earliest: 04-10
+        latest: 04-25
+      extended_latest: 06-20
+      extended_source_id: ncsu_corn_late
+      extended_evidence_ids:
+      - ev_ncsu_corn_late
+      note: Usual statewide range (NASS). Planting after May 20 up to about Jun 20 is described by NC State late-planted-corn
+        research as still having a reasonable opportunity for profit (Piedmont/Virginia); treated as an acceptable-but-late
+        extension, flagged as a warning. Optimum is hybrid and year specific.
+    harvest_window:
+      earliest: 08-20
+      latest: 10-10
+      status: sourced_descriptive
+      source_id: nass_nc_usual_dates
+      evidence_ids:
+      - ev_nass_usual_dates
+      most_active:
+        earliest: 09-10
+        latest: 10-10
+    growth:
+      duration_days:
+        min: 108
+        max: 114
+        status: sourced
+        source_id: ncsu_corn_late
+    water:
+      kc_initial: 0.3
+      kc_mid: 1.2
+      kc_end: 0.6
+      kc_source: fao56
+      kc_note: FAO-56 Table 12, maize (grain), harvested at normal grain moisture. 0.35 if harvested wet.
+      stage_lengths_days:
+        initial: 30
+        development: 40
+        mid: 50
+        late: 50
+      stage_status: sourced_secondary
+      stage_note: FAO-56 Table 11 maize (grain) Idaho April row 30/40/50/50 (170 d), via secondary transcription; not a North
+        Carolina row. Rescaled to the modeled planting-to-harvest span. Phase 1 used 30/40/50/30 which could not be matched
+        to a retrieved row (kept in config/phase1_frozen).
+      drought_sensitive: 'Silking / tasseling (NC State: corn highly sensitive to moisture stress at critical stages)'
+      heat_threshold_c: null
+      stage_alternatives:
+        corn_stage_alt:
+          initial: 20
+          development: 35
+          mid: 40
+          late: 30
+      evidence_ids:
+      - ev_fao56_t12
+      - ev_fao56_t11_secondary
+    rotation:
+      preceding_crop_restrictions: []
+      following_crop_restrictions: []
+      warnings: []
+      warnings_with_cover:
+      - Small-grain cover should be terminated 7-14 days before corn planting to limit soil-water depletion (ncsu_winter_cover_crops).
+      - Crimson clover self-reseeding does not work before full-season corn (ncsu_winter_cover_crops).
+      - Grass cover can immobilize N for the following corn (qualitative only).
+    management:
+      planting_methods:
+      - conventional
+      - no_till
+      harvest_methods:
+      - combine
+      equipment_required:
+      - planter
+      - combine
+    review_status: unverified
+  soybean:
+    name: Soybean (full-season or double-crop)
+    scientific_name: Glycine max
+    role: cash_crop
+    family: Fabaceae
+    season: summer
+    planting_window:
+      earliest: 05-01
+      latest: 07-20
+      status: sourced_descriptive
+      source_id: nass_nc_usual_dates
+      evidence_ids:
+      - ev_nass_usual_dates
+      most_active:
+        earliest: 05-20
+        latest: 06-30
+    full_season_window:
+      earliest: 05-01
+      latest: 06-10
+      status: sourced_descriptive
+      source_id: ncsu_soy_guide_via_press
+      evidence_ids:
+      - ev_soy_guide_press
+      - ev_ncsu_soy_fullseason
+      note: Secondary (press quote of NC State guide) plus NC State statement that yield falls when planting slips past mid-May.
+        Guide itself not read.
+    double_crop_window:
+      earliest: 06-08
+      latest: 07-05
+      status: sourced_descriptive
+      source_id: ncsu_soybean_double_crop
+      evidence_ids:
+      - ev_ncsu_soy_double
+    harvest_window:
+      earliest: 10-10
+      latest: 12-20
+      status: sourced_descriptive
+      source_id: nass_nc_usual_dates
+      evidence_ids:
+      - ev_nass_usual_dates
+      most_active:
+        earliest: 11-10
+        latest: 12-05
+      note: NASS usual harvest mixes full-season and double-crop; earliest-maturing full-season fields can finish before Oct
+        10, which would be flagged, not rejected.
+    growth:
+      duration_days:
+        min: 100
+        max: 140
+        status: assumed
+        source_id: hinge_assumption
+    water:
+      kc_initial: 0.4
+      kc_mid: 1.15
+      kc_end: 0.5
+      kc_source: fao56
+      kc_note: FAO-56 Table 12, soybeans.
+      stage_lengths_days:
+        initial: 20
+        development: 30
+        mid: 60
+        late: 25
+      stage_status: sourced_secondary
+      stage_note: FAO-56 Table 11 soybean Central USA May row 20/30-35/60/25 (140 d), secondary transcription; not an NC row.
+      drought_sensitive: null
+      heat_threshold_c: null
+      evidence_ids:
+      - ev_fao56_t12
+      - ev_fao56_t11_secondary
+    rotation:
+      preceding_crop_restrictions: []
+      following_crop_restrictions: []
+      warnings: []
+      warnings_with_cover:
+      - Hairy vetch cover has been associated with higher soybean cyst nematode populations (ncsu_winter_cover_crops); hairy
+        vetch is not used in these templates.
+    management:
+      planting_methods:
+      - conventional
+      - no_till
+      harvest_methods:
+      - combine
+      equipment_required:
+      - planter
+      - combine
+    review_status: unverified
+  winter_wheat:
+    name: Winter wheat (grain)
+    scientific_name: Triticum aestivum
+    role: cash_crop
+    family: Poaceae
+    season: winter
+    planting_window:
+      earliest: 09-20
+      latest: 12-20
+      status: sourced_descriptive
+      source_id: nass_nc_usual_dates
+      evidence_ids:
+      - ev_nass_usual_dates
+      - ev_wheat_start
+      - ev_wheat_sampson
+      most_active:
+        earliest: 10-15
+        latest: 11-20
+      note: 'NASS usual range. NC State start-date advice: Oct 15-20 (Piedmont, secondary), Oct 20-25 (NE Coastal Plain);
+        Sampson Co.: optimum late October through Thanksgiving. Plant after first fall frost where Hessian fly is present.
+        AG-850 start-date map for Johnston County NOT retrieved.'
+    harvest_window:
+      earliest: 05-30
+      latest: 07-25
+      status: sourced_descriptive
+      source_id: nass_nc_usual_dates
+      evidence_ids:
+      - ev_nass_usual_dates
+      most_active:
+        earliest: 06-10
+        latest: 06-30
+    growth:
+      duration_days:
+        min: 200
+        max: 230
+        status: assumed
+        source_id: hinge_assumption
+    water:
+      kc_initial: 0.7
+      kc_mid: 1.15
+      kc_end: 0.25
+      kc_end_range:
+      - 0.25
+      - 0.4
+      kc_source: fao56
+      kc_note: 'FAO-56 Table 12: Kc ini 0.4 for winter wheat on frozen soils, 0.7 on non-frozen soils; mid 1.15; end 0.25-0.40.
+        Phase 1 used the frozen-soil 0.4. Johnston County winter soils are treated as non-frozen (inferred, not sourced);
+        0.4 is run as a sensitivity.'
+      stage_lengths_days:
+        initial: 30
+        development: 140
+        mid: 40
+        late: 30
+      stage_status: unverified_generic
+      stage_note: '30/140/40/30 could not be matched to a retrieved FAO-56 Table 11 row. Retrieved rows: Idaho Oct 160/75/75/25
+        (335 d); a teaching note citing FAO-56 gives 20/60/70/30 for winter cereals. Alternatives are run as sensitivities.'
+      drought_sensitive: null
+      heat_threshold_c: null
+      kc_initial_frozen_soils: 0.4
+      stage_alternatives:
+        wheat_stage_idaho:
+          initial: 160
+          development: 75
+          mid: 75
+          late: 25
+        wheat_stage_winter_cereal:
+          initial: 20
+          development: 60
+          mid: 70
+          late: 30
+      evidence_ids:
+      - ev_fao56_t12
+      - ev_fao56_t11_secondary
+    rotation:
+      preceding_crop_restrictions: []
+      following_crop_restrictions: []
+      warnings:
+      - 'Hessian fly: plant wheat after first fall frost where the fly is present (ncsu_winter_cover_crops).'
+    management:
+      planting_methods:
+      - drill
+      - no_till
+      harvest_methods:
+      - combine
+      equipment_required:
+      - grain_drill
+      - combine
+    review_status: unverified
+  cereal_rye:
+    name: Cereal rye (winter cover)
+    scientific_name: Secale cereale
+    role: cover_crop
+    family: Poaceae
+    season: winter
+    planting_window:
+      earliest: 09-30
+      latest: 12-15
+      preferred_latest: 11-15
+      status: sourced
+      source_id: ncsu_winter_cover_crops
+      note: 'Table 4, Coastal Plain: preferred Sep 30 - Nov 15; possible Sep 30 - Dec 15. Piedmont: preferred Sep 15 - Oct
+        15; possible Sep 15 - Nov 15.'
+      evidence_ids:
+      - ev_ncsu_cover_crops
+      piedmont:
+        earliest: 09-15
+        latest: 11-15
+        preferred_latest: 10-15
+    termination_window:
+      earliest: 03-25
+      latest: 04-30
+      status: sourced_descriptive
+      source_id: ncsu_winter_cover_crops
+      note: 'NC State: kill near April 1 in the east, mid to late April in the piedmont and mountains. The Mar 25-Apr 30 bounds
+        are OUR inferred spread around that guidance, so outside-range is flagged, not rejected.'
+      evidence_ids:
+      - ev_ncsu_cover_crops
+    termination_methods_supported:
+    - herbicide
+    - roller_crimper
+    - tillage
+    pre_cash_crop_gap_days:
+      min: 7
+      max: 14
+      status: sourced
+      source_id: ncsu_winter_cover_crops
+      evidence_ids:
+      - ev_ncsu_cover_crops
+      note: 'NC State: kill small grain 7-14 days before corn planting. Stated for corn; applied to soybean as an assumption-by-analogy
+        (not sourced for soybean).'
+    growth:
+      duration_days:
+        min: null
+        max: null
+    water:
+      kc_initial: null
+      kc_mid: null
+      kc_end: null
+      kc_source: null
+      kc_note: No published cereal-rye cover Kc found (FAO-56 lists no cover-crop rye). Flagged assumption in model_parameters.yaml;
+        bounded by sensitivity sets.
+      stage_status: assumed
+    rotation:
+      warnings:
+      - Grass cover can immobilize soil N for the following crop (ncsu_winter_cover_crops).
+      - Living cover depletes soil water until terminated (ncsu_winter_cover_crops).
+      - Rye is not a Hessian fly host (ncsu_winter_cover_crops).
+    management:
+      planting_methods:
+      - drill
+      - broadcast
+      - aerial_overseed
+      equipment_required:
+      - grain_drill
+    review_status: unverified
+  crimson_clover:
+    name: Crimson clover (winter legume cover)
+    scientific_name: Trifolium incarnatum
+    role: cover_crop
+    family: Fabaceae
+    season: winter
+    planting_window:
+      earliest: 09-01
+      latest: 10-30
+      preferred_latest: 09-30
+      status: sourced
+      source_id: ncsu_winter_cover_crops
+      note: 'Table 1, Coastal Plain: preferred Sep 1-30; possible Sep 1 - Oct 30. Piedmont: Aug 25 - Oct 1.'
+      evidence_ids:
+      - ev_ncsu_cover_crops
+      piedmont:
+        earliest: 08-25
+        latest: 10-01
+        preferred_latest: 10-01
+    termination_window:
+      earliest: 03-25
+      latest: 04-30
+      status: sourced_descriptive
+      source_id: ncsu_winter_cover_crops
+      evidence_ids:
+      - ev_ncsu_cover_crops
+      note: 'NC State: kill near April 1 in the east, mid to late April in the piedmont and mountains. The Mar 25-Apr 30 bounds
+        are OUR inferred spread around that guidance, so outside-range is flagged, not rejected.'
+    termination_methods_supported:
+    - herbicide
+    - roller_crimper
+    - tillage
+    growth:
+      duration_days:
+        min: null
+        max: null
+    water:
+      kc_initial: null
+      kc_mid: null
+      kc_end: null
+      kc_source: null
+      stage_status: assumed
+    rotation:
+      warnings:
+      - Late planting (Nov 19) gave 0.4 t/ac dry matter vs 1.5 t/ac on Oct 12 after soybean MG5 (Table 3, one site).
+      - Nitrogen contribution is described qualitatively; no fertilizer credit is computed.
+    management:
+      planting_methods:
+      - drill
+      - broadcast
+      - aerial_overseed
+      equipment_required:
+      - grain_drill
+    review_status: unverified
+sources_version: phase2
